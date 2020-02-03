@@ -1,11 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class VerticalFollower : MonoBehaviour
 {
     public Transform Player;
-    public PlayerDirectionDefiner PlayerDirectionDefiner;
     public float RiseOffset;
     public float FallOffset;
     [Tooltip("Leave 0 to disable lerping")]
@@ -20,6 +20,15 @@ public class VerticalFollower : MonoBehaviour
 
     PlayerDirection _currentPlayerDirection;
 
+
+    public event Func<PlayerDirection> Request_PlayerDirection;
+
+    public void Handle_DirectionChanged(PlayerDirection newDireciton)
+    {
+        _currentPlayerDirection = newDireciton;
+    }
+
+
     // Start is called just before any of the Update methods is called the first time
     private void Start()
     {
@@ -27,19 +36,10 @@ public class VerticalFollower : MonoBehaviour
         _lerping = LerpingSpeed > 0f;
         _offset = RiseOffset != 0f || FallOffset != 0;
 
-        _currentPlayerDirection = PlayerDirectionDefiner.CurrentDirection;
-        PlayerDirectionDefiner.DirectionChanged += ChangeDirection;
-    }
-
-    // This function is called when the MonoBehaviour will be destroyed
-    private void OnDestroy()
-    {
-        PlayerDirectionDefiner.DirectionChanged -= ChangeDirection;
-    }
-
-    void ChangeDirection(PlayerDirection newDireciton)
-    {
-        _currentPlayerDirection = newDireciton;
+        if(Request_PlayerDirection != null)
+            _currentPlayerDirection = Request_PlayerDirection.Invoke();
+        else
+            _currentPlayerDirection = PlayerDirection.UNDEFINED;
     }
 
     // LateUpdate is called every frame, if the Behaviour is enabled

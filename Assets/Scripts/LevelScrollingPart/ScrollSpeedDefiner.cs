@@ -18,11 +18,11 @@ public class ScrollSpeedDefiner : MonoBehaviour
 
     //====================================================================
     //Properties
-    public float CurrentScrollSpeed
+    float CurrentScrollSpeed
     {
         get => _currentScrollSpeed;
 
-        private set
+        set
         {
             if(value != _currentScrollSpeed)
             {
@@ -37,6 +37,11 @@ public class ScrollSpeedDefiner : MonoBehaviour
     private void Awake()
     {
         _currentScrollSpeed = StartScrollSpeed;
+    }
+
+    public float GetCurrentScrollSpeed()
+    {
+        return CurrentScrollSpeed;
     }
 
     public void IncreaseSpeed()
