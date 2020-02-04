@@ -60,18 +60,17 @@ public class PlayerHitDetectionSystem : MonoBehaviour
 
     HitDirection DefineDirection(Vector2 hitPoint)
     {
-        float thisY = this.transform.position.y;
-        float hitY = hitPoint.y;
+        Vector2 ourPosition = this.transform.position;
 
-        if(Mathf.Abs(thisY - hitY) < HitDirectionOffset)
-            return HitDirection.Side;
+        if (Mathf.Abs(ourPosition.y - hitPoint.y) < HitDirectionOffset)
+            return hitPoint.x > ourPosition.x ? HitDirection.RightSide : HitDirection.LeftSide;
         else
-            return thisY > hitY ? HitDirection.Above : HitDirection.Below;
+            return ourPosition.y > hitPoint.y ? HitDirection.Above : HitDirection.Below;
     }
 
     bool IsACrash(HitDetectionEventArgs args)
     {
-        if(args.HitDirection == HitDirection.Side)
+        if(args.HitDirection == HitDirection.RightSide)
         {
             if(args.HittedObjectType == HittedObjectType.Platform)
                 return true;

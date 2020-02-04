@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _dashDuration = new WaitForSeconds(DashDuration);
+        _airDashAllowed = true;
 
         JumpButton.onClick.AddListener(Jump);
         DashButton.onClick.AddListener(Dash);

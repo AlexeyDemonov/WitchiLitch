@@ -5,15 +5,15 @@ using UnityEngine;
 public class PlayerAnimatorController : MonoBehaviour
 {
     public Animator Animator;
+    public GroundChecker GroundChecker;
 
     AnimState _currentState;
-    AnimState _queuedState;
+    PlayerDirection _currentDireciton;
 
     // Start is called before the first frame update
     void Start()
     {
         _currentState = AnimState.Run;
-        _queuedState = AnimState.UNDEFINED;
     }
 
     public void Handle_PlayerAction(PlayerActionType actionType)
@@ -22,7 +22,7 @@ public class PlayerAnimatorController : MonoBehaviour
         {
             case PlayerActionType.Jump:             ConsiderApplyingNewState(AnimState.Jump);   break;
             case PlayerActionType.DashForward:      ConsiderApplyingNewState(AnimState.Dash);   break;
-            case PlayerActionType.DashForwardEnd:   ConsiderApplyingNewState(AnimState.MidAir);     break;
+            case PlayerActionType.DashForwardEnd:   DefineCurrentState();            break;
             case PlayerActionType.DashDown:         ConsiderApplyingNewState(AnimState.DashDown);   break;
         }
     }
@@ -38,7 +38,7 @@ public class PlayerAnimatorController : MonoBehaviour
         {
             case HitDirection.Above:    ConsiderApplyingNewState(AnimState.HitGround);     break;
             case HitDirection.Below:    ConsiderApplyingNewState(AnimState.HitCeiling);    break;
-            case HitDirection.Side: /*Do nothing*/  break;
+            default: /*Do nothing*/  break;
         }
     }
 
@@ -50,26 +50,43 @@ public class PlayerAnimatorController : MonoBehaviour
             case PlayerDirection.Falling:   ConsiderApplyingNewState(AnimState.Fall);   break;
             case PlayerDirection.Staying:   ConsiderApplyingNewState(AnimState.Run);    break;
         }
+
+        _currentDireciton = newDirection;
     }
 
     public void Handle_AnimationEnded()
     {
-        if(_queuedState != AnimState.UNDEFINED)
-        {
-            ApplyNewState(_queuedState);
-            _queuedState = AnimState.UNDEFINED;
-        }
+        if(_currentState == AnimState.Dash)//Bug: Sometimes if user presses dash button during landing HitGround animation stucks even though _currentState is correct, this is a workaround
+            ApplyNewState(_currentState);
+        else
+            DefineCurrentState();
     }
 
-    void QueueNextState(AnimState nextState)
+    void DefineCurrentState()
     {
-        _queuedState = nextState;
+        switch (_currentDireciton)
+        {
+            case PlayerDirection.Rising:
+                ApplyNewState(AnimState.Jump);
+                break;
+            case PlayerDirection.Falling:
+                ApplyNewState(AnimState.Fall);
+                break;
+            default:
+                {
+                    if (GroundChecker.IsGrounded)
+                        ApplyNewState(AnimState.Run);
+                    else
+                        ApplyNewState(AnimState.MidAir);
+                }
+                break;
+        }
     }
 
     void ApplyNewState(AnimState newState)
     {
-        _currentState = newState;
         Animator.SetTrigger(newState.ToString());
+        _currentState = newState;
     }
 
     void ConsiderApplyingNewState(AnimState newState)
@@ -190,9 +207,9 @@ public class PlayerAnimatorController : MonoBehaviour
                 /*Ignore*/
                 break;
             case AnimState.Jump:
-            case AnimState.MidAir:
                 ApplyNewState(newState);
                 break;
+            case AnimState.MidAir:
             case AnimState.Fall:
                 /*Ignore*/
                 break;
@@ -247,14 +264,14 @@ public class PlayerAnimatorController : MonoBehaviour
         switch (newState)
         {
             case AnimState.Run:
-                QueueNextState(newState);
+                /*Ignore*/
                 break;
             case AnimState.Jump:
                 ApplyNewState(newState);
                 break;
             case AnimState.MidAir:
             case AnimState.Fall:
-                QueueNextState(newState);
+                /*Ignore*/
                 break;
             case AnimState.Dash:
             case AnimState.DashDown:

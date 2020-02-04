@@ -1,4 +1,4 @@
 ﻿public enum HitDirection
 {
-    Above, Below, Side
+    Above, Below, LeftSide, RightSide
 }

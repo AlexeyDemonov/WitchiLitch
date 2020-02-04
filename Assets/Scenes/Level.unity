@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 30823626}
   - component: {fileID: 30823627}
   m_Layer: 8
-  m_Name: GroundChecker (1)
+  m_Name: BckGroundChecker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -137,7 +137,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 30823625}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.8000002, y: -0.4, z: 0}
+  m_LocalPosition: {x: -0.8, y: -0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 226289937}
@@ -262,6 +262,7 @@ Transform:
   m_Children:
   - {fileID: 2066687192}
   - {fileID: 30823626}
+  - {fileID: 534690082}
   m_Father: {fileID: 1694139831}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -637,7 +638,7 @@ MonoBehaviour:
   - {fileID: 270537000297692779, guid: 1c0e9a30a81e3704a8a087f3a220b384, type: 3}
   - {fileID: 1787911851057258451, guid: 39cdf2edd16b1e647a094557d62c55b7, type: 3}
   - {fileID: 122479701210591609, guid: 0d75a25b203869e42b0f5a04022a96ff, type: 3}
-  PartsCount: 3
+  PartsCount: 4
   DrawGizmos: 0
 --- !u!4 &528817208
 Transform:
@@ -653,6 +654,51 @@ Transform:
   m_Father: {fileID: 298187363}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &534690081
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 534690082}
+  - component: {fileID: 534690083}
+  m_Layer: 8
+  m_Name: FwdGroundChecker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &534690082
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534690081}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.8, y: -0.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 226289937}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &534690083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534690081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ce1fc242fffe2247856a9f367a3959f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GroundDistance: 0.5
+  LayerMask: 1536
 --- !u!1 &565663207
 GameObject:
   m_ObjectHideFlags: 0
@@ -1442,7 +1488,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df549828bad49cf47bf2ec58963a0765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitDirectionOffset: 0.45
+  HitDirectionOffset: 0.3
   EnemyOnJumpHitChecker: {fileID: 2066687191}
 --- !u!4 &1694139831
 Transform:
@@ -1530,6 +1576,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Animator: {fileID: 1694139829}
+  GroundChecker: {fileID: 534690083}
 --- !u!1 &1732095275
 GameObject:
   m_ObjectHideFlags: 0
@@ -1931,7 +1978,7 @@ GameObject:
   - component: {fileID: 2066687192}
   - component: {fileID: 2066687191}
   m_Layer: 8
-  m_Name: GroundChecker
+  m_Name: MidGroundChecker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
