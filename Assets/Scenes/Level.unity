@@ -2217,8 +2217,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df549828bad49cf47bf2ec58963a0765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitDirectionOffset: 0.3
+  PlatformSideHitRange: 0.1
+  EnemySideHitRange: 0.3
   EnemyOnJumpHitChecker: {fileID: 2066687191}
+  DrawPlatformSideHitGizmo: 1
+  DrawEnemySideHitGizmo: 1
 --- !u!4 &1694139831
 Transform:
   m_ObjectHideFlags: 0

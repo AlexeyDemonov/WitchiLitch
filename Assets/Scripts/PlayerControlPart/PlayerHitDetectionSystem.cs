@@ -6,8 +6,12 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class PlayerHitDetectionSystem : MonoBehaviour
 {
-    public float HitDirectionOffset;
+    public float PlatformSideHitRange;
+    public float EnemySideHitRange;
     public GroundChecker EnemyOnJumpHitChecker;
+
+    public bool DrawPlatformSideHitGizmo;
+    public bool DrawEnemySideHitGizmo;
 
     public event Action PlayerCrashed;
     public event Action<HitDetectionEventArgs> PlayerHittedObject;
@@ -40,7 +44,7 @@ public class PlayerHitDetectionSystem : MonoBehaviour
         var hittedObject = collision.gameObject;
         var objectType   = DefineHittedObjectType(collision.transform);
         var hitPoint     = collision.GetContact(0).point;
-        var hitDirection = DefineDirection(hitPoint);
+        var hitDirection = DefineDirection(hitPoint, objectType);
         
         var eventArgs = new HitDetectionEventArgs() { HittedObject = hittedObject, HittedObjectType = objectType, HitPoint = hitPoint, HitDirection = hitDirection };
 
@@ -58,11 +62,13 @@ public class PlayerHitDetectionSystem : MonoBehaviour
             return HittedObjectType.Platform;
     }
 
-    HitDirection DefineDirection(Vector2 hitPoint)
+    HitDirection DefineDirection(Vector2 hitPoint, HittedObjectType objectType)
     {
         Vector2 ourPosition = this.transform.position;
 
-        if (Mathf.Abs(ourPosition.y - hitPoint.y) < HitDirectionOffset)
+        float offset = objectType == HittedObjectType.Enemy ? EnemySideHitRange : PlatformSideHitRange;
+
+        if (Mathf.Abs(ourPosition.y - hitPoint.y) < offset)
             return hitPoint.x > ourPosition.x ? HitDirection.RightSide : HitDirection.LeftSide;
         else
             return ourPosition.y > hitPoint.y ? HitDirection.Above : HitDirection.Below;
@@ -91,6 +97,27 @@ public class PlayerHitDetectionSystem : MonoBehaviour
         {
             var eventArgs = new HitDetectionEventArgs() { HittedObject = hit.collider.gameObject, HittedObjectType = HittedObjectType.Enemy, HitPoint = hit.point, HitDirection = HitDirection.Above };
             PlayerHittedObject?.Invoke(eventArgs);
+        }
+    }
+
+    // Implement this OnDrawGizmosSelected if you want to draw gizmos only if the object is selected
+    private void OnDrawGizmos()
+    {
+        if((DrawPlatformSideHitGizmo || DrawEnemySideHitGizmo) && Application.isPlaying)
+        {
+            Vector3 currentPosition = this.transform.position;
+
+            if(DrawPlatformSideHitGizmo)
+            {
+                Gizmos.DrawCube(new Vector3(currentPosition.x, currentPosition.y + PlatformSideHitRange, currentPosition.z), new Vector3(2f, 0.1f, 0.1f));
+                Gizmos.DrawCube(new Vector3(currentPosition.x, currentPosition.y - PlatformSideHitRange, currentPosition.z), new Vector3(2f, 0.1f, 0.1f));
+            }
+
+            if (DrawEnemySideHitGizmo)
+            {
+                Gizmos.DrawCube(new Vector3(currentPosition.x, currentPosition.y + EnemySideHitRange, currentPosition.z), new Vector3(2f, 0.1f, 0.1f));
+                Gizmos.DrawCube(new Vector3(currentPosition.x, currentPosition.y - EnemySideHitRange, currentPosition.z), new Vector3(2f, 0.1f, 0.1f));
+            }
         }
     }
 }
