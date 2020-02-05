@@ -638,7 +638,7 @@ MonoBehaviour:
   - {fileID: 270537000297692779, guid: 1c0e9a30a81e3704a8a087f3a220b384, type: 3}
   - {fileID: 1787911851057258451, guid: 39cdf2edd16b1e647a094557d62c55b7, type: 3}
   - {fileID: 122479701210591609, guid: 0d75a25b203869e42b0f5a04022a96ff, type: 3}
-  PartsCount: 4
+  PartsCount: 3
   DrawGizmos: 0
 --- !u!4 &528817208
 Transform:

@@ -10,6 +10,7 @@ public class LevelScroller : BaseScroller
     public bool DrawGizmos;
 
     Vector3 _startingPosition;
+    Vector3 _currentPosition;
     Queue<SpriteRenderer> _partsChain;
     SpriteRenderer _lastPart;
     float _bound;
@@ -25,6 +26,7 @@ public class LevelScroller : BaseScroller
         base.RequestScrollSpeed();
 
         _startingPosition = this.transform.position;
+        _currentPosition = _startingPosition;
         _partsChain = new Queue<SpriteRenderer>();
 
         _advancedMode = LevelParts.Length > PartsCount;
@@ -65,21 +67,17 @@ public class LevelScroller : BaseScroller
     {
         if(base.CurrentScrollSpeed != 0f)
         {
-            transform.localPosition += Vector3.left * base.CurrentScrollSpeed * Time.deltaTime;
+            this.transform.position += Vector3.left * base.CurrentScrollSpeed * Time.deltaTime;
+            _currentPosition = this.transform.position;
 
-            if (IsPassedBound || MovedLeftTooFar)
+            if (IsPassedBound)
                 UpdateLevel();
         }
     }
 
     bool IsPassedBound
     {
-        get => this.transform.position.x < _bound;
-    }
-
-    bool MovedLeftTooFar//Bug: The whole level slightly "moves" to the left each step, not a big deal at low speed and short playtime, but extremely noticeable at high speed, this is a workaround
-    {
-        get => _partsChain.Peek().transform.position.x < _bound * 2f;
+        get => _currentPosition.x < _bound;
     }
 
     void UpdateLevel()
@@ -104,7 +102,10 @@ public class LevelScroller : BaseScroller
         AddNextPartToChain(_partsChain, ref _lastPart);
 
         //Move back
-        this.transform.position = _startingPosition;
+        float currentX = _currentPosition.x;
+        float delta = Mathf.Abs(currentX - _bound);
+        Vector3 newPosition = new Vector3(_startingPosition.x - delta, _startingPosition.y, _startingPosition.z);
+        this.transform.position = newPosition;
 
         //Calculate new bound
         _bound = _startingPosition.x - GetFullSize(_partsChain.Peek());
@@ -159,8 +160,8 @@ public class LevelScroller : BaseScroller
     {
         if (DrawGizmos && Application.isPlaying)
         {
-            Gizmos.DrawCube(new Vector3(_bound, this.transform.position.y, this.transform.position.z), new Vector3(0.1f, 2f, 0.1f));
-            Gizmos.DrawSphere(this.transform.position, 0.5f);
+            Gizmos.DrawCube(new Vector3(_bound, _startingPosition.y, _startingPosition.z), new Vector3(0.1f, 2f, 0.1f));
+            Gizmos.DrawSphere(_currentPosition, 0.5f);
         }
     }
 }
