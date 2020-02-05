@@ -10,9 +10,10 @@ public class LevelSceneInitializer : MonoBehaviour
     public PlayerController PlayerController;
     public PlayerAnimatorController PlayerAnimatorController;
     public PlayerHitDetectionSystem PlayerHitDetectionSystem;
+    public FallChecker FallChecker;
+    public PauseMenuUIController PauseMenuUIController;
     public PlayerDirectionDefiner PlayerDirectionDefiner;
     public VerticalFollower[] VerticalFollowers;
-
 
     private void Awake()
     {
@@ -31,10 +32,16 @@ public class LevelSceneInitializer : MonoBehaviour
 
         PlayerHitDetectionSystem.PlayerCrashed += PlayerController.Handle_PalyerCrashed;
         PlayerHitDetectionSystem.PlayerCrashed += PlayerAnimatorController.Handle_PlayerCrashed;
-        //PlayerHitDetectionSystem.PlayerCrashed += ScrollSpeedDefiner.StopScroll;
+        PlayerHitDetectionSystem.PlayerCrashed += ScrollSpeedDefiner.StopScroll;
+        PlayerHitDetectionSystem.PlayerCrashed += PauseMenuUIController.Handle_PlayerCrashed;
 
         PlayerHitDetectionSystem.PlayerHittedObject += PlayerController.Handle_PlayerHittedObject;
         PlayerHitDetectionSystem.PlayerHittedObject += PlayerAnimatorController.Handle_PlayerHittedObject;
+
+        FallChecker.Fallen += PlayerController.Handle_PalyerCrashed;
+        FallChecker.Fallen += PlayerAnimatorController.Handle_PlayerCrashed;
+        FallChecker.Fallen += ScrollSpeedDefiner.StopScroll;
+        FallChecker.Fallen += PauseMenuUIController.Handle_PlayerCrashed;
 
         foreach (var follower in VerticalFollowers)
         {
