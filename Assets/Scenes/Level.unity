@@ -524,6 +524,7 @@ Transform:
   - {fileID: 296328547}
   - {fileID: 2114655128}
   - {fileID: 1663677816}
+  - {fileID: 1664387375}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -737,12 +738,15 @@ MonoBehaviour:
   StartingPart: {fileID: 6629929726098344212, guid: 42bf27185b7cc844da94736f010225d7,
     type: 3}
   LevelParts:
-  - {fileID: 6629929726098344212, guid: 42bf27185b7cc844da94736f010225d7, type: 3}
   - {fileID: 6210685526873134425, guid: 2e138f4687866fd4d9be63467140258a, type: 3}
   - {fileID: 8813061682675252602, guid: f06ab2b44151321479c852173b819ee9, type: 3}
   - {fileID: 270537000297692779, guid: 1c0e9a30a81e3704a8a087f3a220b384, type: 3}
   - {fileID: 1787911851057258451, guid: 39cdf2edd16b1e647a094557d62c55b7, type: 3}
   - {fileID: 122479701210591609, guid: 0d75a25b203869e42b0f5a04022a96ff, type: 3}
+  - {fileID: 5226435697973470338, guid: fd430e2d28fafbb43bfc45e98d15b887, type: 3}
+  - {fileID: 4995816281409170595, guid: 72bc26b8cb92e6e4098745be5a16dd1e, type: 3}
+  - {fileID: 1779761821513926986, guid: 516f9ec7d65ecab4fab9d148156b19ba, type: 3}
+  - {fileID: 1852785277415347264, guid: 3aeb8c357dc38c942aa3cb2668ea906e, type: 3}
   PartsCount: 3
   DrawGizmos: 0
 --- !u!4 &528817208
@@ -2100,6 +2104,49 @@ MonoBehaviour:
   RestartButton: {fileID: 1701945986}
   ExitButton: {fileID: 1970041067}
   OnCrushDelayBeforeShowUI: 1
+--- !u!1 &1664387374
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1664387375}
+  - component: {fileID: 1664387376}
+  m_Layer: 0
+  m_Name: EnemyHitRegistrationSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1664387375
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1664387374}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 494642810}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1664387376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1664387374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51193facbc65bcc4fae91cc9b386e8a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1694139827
 GameObject:
   m_ObjectHideFlags: 0
@@ -2907,6 +2954,7 @@ MonoBehaviour:
   VerticalFollowers:
   - {fileID: 519420030}
   - {fileID: 671709286}
+  EnemyHitRegistrationSystem: {fileID: 1664387376}
 --- !u!1 &2066687190
 GameObject:
   m_ObjectHideFlags: 0

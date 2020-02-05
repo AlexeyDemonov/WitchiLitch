@@ -14,6 +14,7 @@ public class LevelSceneInitializer : MonoBehaviour
     public PauseMenuUIController PauseMenuUIController;
     public PlayerDirectionDefiner PlayerDirectionDefiner;
     public VerticalFollower[] VerticalFollowers;
+    public EnemyHitRegistrationSystem EnemyHitRegistrationSystem;
 
     private void Awake()
     {
@@ -30,13 +31,14 @@ public class LevelSceneInitializer : MonoBehaviour
         PlayerController.PlayerAction += PlayerAnimatorController.Handle_PlayerAction;
         PlayerController.PlayerAction += PlayerHitDetectionSystem.Handle_PlayerAction;
 
+        PlayerHitDetectionSystem.PlayerHittedObject += PlayerController.Handle_PlayerHittedObject;
+        PlayerHitDetectionSystem.PlayerHittedObject += PlayerAnimatorController.Handle_PlayerHittedObject;
+        PlayerHitDetectionSystem.PlayerHittedObject += EnemyHitRegistrationSystem.Handle_EnemyHit;
+
         PlayerHitDetectionSystem.PlayerCrashed += PlayerController.Handle_PalyerCrashed;
         PlayerHitDetectionSystem.PlayerCrashed += PlayerAnimatorController.Handle_PlayerCrashed;
         PlayerHitDetectionSystem.PlayerCrashed += ScrollSpeedDefiner.StopScroll;
         PlayerHitDetectionSystem.PlayerCrashed += PauseMenuUIController.Handle_PlayerCrashed;
-
-        PlayerHitDetectionSystem.PlayerHittedObject += PlayerController.Handle_PlayerHittedObject;
-        PlayerHitDetectionSystem.PlayerHittedObject += PlayerAnimatorController.Handle_PlayerHittedObject;
 
         FallChecker.Fallen += PlayerController.Handle_PalyerCrashed;
         FallChecker.Fallen += PlayerAnimatorController.Handle_PlayerCrashed;
