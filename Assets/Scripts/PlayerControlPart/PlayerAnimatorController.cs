@@ -56,9 +56,11 @@ public class PlayerAnimatorController : MonoBehaviour
 
     public void Handle_AnimationEnded()
     {
-        if(_currentState == AnimState.Dash)//Bug: Sometimes if user presses dash button during landing HitGround animation stucks even though _currentState is correct, this is a workaround
+        //Bug: Sometimes if user presses dash button during landing HitGround animation stucks even though _currentState is correct, this is a workaround
+        if (_currentState == AnimState.Dash)
             ApplyNewState(_currentState);
-        else
+        //Bug: Sometimes this event is called even though animation already switched, this is a workaround
+        else if (_currentState == AnimState.HitGround || _currentState == AnimState.HitCeiling)
             DefineCurrentState();
     }
 

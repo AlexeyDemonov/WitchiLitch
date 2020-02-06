@@ -932,6 +932,7 @@ GameObject:
   - component: {fileID: 1890689753}
   - component: {fileID: 1890689752}
   - component: {fileID: 1890689756}
+  - component: {fileID: 1890689757}
   m_Layer: 5
   m_Name: ExitButton
   m_TagString: Untagged
@@ -1047,6 +1048,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   KeyCode: 27
+--- !u!114 &1890689757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1890689751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93e8b28dfc8e16e4bafc7c77f7603576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KeyCode: 8
 --- !u!1001 &1937931582
 PrefabInstance:
   m_ObjectHideFlags: 0
