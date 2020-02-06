@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     WaitForSeconds _dashDuration;
     Coroutine _removeDashCoroutine;
     bool _airDashAllowed;
+    bool _alive;
 
     // Start is called before the first frame update
     void Start()
@@ -28,10 +29,33 @@ public class PlayerController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         _dashDuration = new WaitForSeconds(DashDuration);
         _airDashAllowed = true;
+        _alive = true;
 
-        JumpButton.onClick.AddListener(Jump);
-        DashButton.onClick.AddListener(Dash);
-        FallButton.onClick.AddListener(Fall);
+        JumpButton?.onClick.AddListener(Jump);
+        DashButton?.onClick.AddListener(Dash);
+        FallButton?.onClick.AddListener(Fall);
+    }
+
+    public void Handle_ActionRequest(PlayerActionType actionType)
+    {
+        if(_alive)
+        {
+            switch (actionType)
+            {
+                case PlayerActionType.Jump:
+                    Jump();
+                    break;
+                case PlayerActionType.DashForward:
+                    Dash();
+                    break;
+                case PlayerActionType.DashDown:
+                    Fall();
+                    break;
+                default:
+                    Debug.LogError("PlayerController.Handle_ActionRequest: Unknown actionType");
+                    break;
+            }
+        }
     }
 
     public void Handle_PalyerCrashed()
@@ -43,9 +67,10 @@ public class PlayerController : MonoBehaviour
             _rigidbody.gravityScale = 1f;
         }
 
-        JumpButton.onClick.RemoveListener(Jump);
-        DashButton.onClick.RemoveListener(Dash);
-        FallButton.onClick.RemoveListener(Fall);
+        _alive = false;
+        JumpButton?.onClick.RemoveListener(Jump);
+        DashButton?.onClick.RemoveListener(Dash);
+        FallButton?.onClick.RemoveListener(Fall);
     }
 
     public void Handle_PlayerHittedObject(HitDetectionEventArgs args)

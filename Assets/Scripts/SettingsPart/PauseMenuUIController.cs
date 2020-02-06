@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class PauseMenuUIController : MonoBehaviour
 {
     public Button PauseButton;
+    public GameObject ControlsUI;
     public GameObject PauseUI;
     public Button ResumeButton;
     public Button RestartButton;
@@ -28,6 +29,13 @@ public class PauseMenuUIController : MonoBehaviour
             PauseUI.SetActive(false);
 
         _onCrushDelay = new WaitForSeconds(OnCrushDelayBeforeShowUI);
+    }
+
+    // Sent to all game objects when the player pauses
+    private void OnApplicationPause(bool pause)
+    {
+        if(pause == true)
+            PauseGame();
     }
 
     public void Handle_PlayerCrashed()
@@ -55,14 +63,14 @@ public class PauseMenuUIController : MonoBehaviour
             _showUIAfterDelay = null;
         }
 
-        PauseButton.gameObject.SetActive(false);
+        ControlsUI.SetActive(false);
         PauseUI.SetActive(true);
         Time.timeScale = 0f;
     }
 
     void ResumeGame()
     {
-        PauseButton.gameObject.SetActive(true);
+        ControlsUI.SetActive(true);
         PauseUI.SetActive(false);
         Time.timeScale = 1f;
     }

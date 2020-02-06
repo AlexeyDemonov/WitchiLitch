@@ -15,6 +15,7 @@ public class LevelSceneInitializer : MonoBehaviour
     public PlayerDirectionDefiner PlayerDirectionDefiner;
     public VerticalFollower[] VerticalFollowers;
     public EnemyHitRegistrationSystem EnemyHitRegistrationSystem;
+    public UIToActionRequestConverter UIToActionRequestConverter;
 
     private void Awake()
     {
@@ -52,5 +53,7 @@ public class LevelSceneInitializer : MonoBehaviour
         }
 
         PlayerDirectionDefiner.DirectionChanged += PlayerAnimatorController.Handle_PlayerDirectionChanged;
+
+        UIToActionRequestConverter.Request_Action += PlayerController.Handle_ActionRequest;
     }
 }
