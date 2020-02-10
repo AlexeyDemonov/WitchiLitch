@@ -1,12 +1,17 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelScroller : BaseScroller
 {
+    [Header("Starting part")]
     public SpriteRenderer StartingPart;
+    [Header("Regular level")]
     public SpriteRenderer[] LevelParts;
     public int PartsCount;
+    [Header("Boss part")]
+    public SpriteRenderer BossLevel;
     public bool DrawGizmos;
 
     Vector3 _startingPosition;
@@ -19,6 +24,25 @@ public class LevelScroller : BaseScroller
     Queue<int> _spawnedIndexes;
     bool[] _spawned;
 
+    bool _bossMode;
+    int _nonBossPartsLeft;
+
+    public event Action BossLevelReady;
+
+    public void Handle_BossLevelStartRequest()
+    {
+        if (_bossMode == false)
+        {
+            _bossMode = true;
+            _nonBossPartsLeft = PartsCount;
+        }
+    }
+
+    public void Handle_BossLevelEndRequest()
+    {
+        if(_bossMode == true)
+            _bossMode = false;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -30,11 +54,11 @@ public class LevelScroller : BaseScroller
         _partsChain = new Queue<SpriteRenderer>();
 
         _advancedMode = LevelParts.Length > PartsCount;
+        _bossMode = false;
 
         if(_advancedMode)
         {
             _spawnedIndexes = new Queue<int>();
-            _spawnedIndexes.Enqueue(-1);
             _spawned = new bool[LevelParts.Length];
         }
 
@@ -90,12 +114,18 @@ public class LevelScroller : BaseScroller
         var partToDelete = _partsChain.Dequeue();
         Destroy(partToDelete.gameObject);
 
-        if(_advancedMode)
+        if(_advancedMode && _spawnedIndexes.Count == PartsCount)
         {
             var index = _spawnedIndexes.Dequeue();
+            _spawned[index] = false;
+        }
 
-            if(index != -1)
-                _spawned[index] = false;
+        if(_bossMode && _nonBossPartsLeft > 0)
+        {
+            _nonBossPartsLeft--;
+
+            if/*now*/(_nonBossPartsLeft == 0)
+                BossLevelReady?.Invoke();
         }
 
         //Add new
@@ -120,7 +150,7 @@ public class LevelScroller : BaseScroller
 
     void AddNextPartToChain(Queue<SpriteRenderer> chain, ref SpriteRenderer lastElement)
     {
-        var nextPart = DefineNextPart(out int index);
+        var nextPart = DefineNextPart();
         var offset = GetHalfSize(_lastPart) + GetHalfSize(nextPart);
         var positionForNextPart = new Vector3(_lastPart.transform.position.x + offset, _startingPosition.y, _startingPosition.z);
         var instanceOfNextPart = Instantiate<SpriteRenderer>(nextPart, positionForNextPart, Quaternion.identity);
@@ -128,30 +158,33 @@ public class LevelScroller : BaseScroller
         lastElement = instanceOfNextPart;
     }
 
-    SpriteRenderer DefineNextPart(out int index)
+    SpriteRenderer DefineNextPart()
     {
-        if(_advancedMode)
+        if(_bossMode)
+        {
+            return BossLevel;
+        }
+        else if(_advancedMode)
         {
             var length = LevelParts.Length;
-            var randomIndex = UnityEngine.Random.Range(0, length);
+            var index = UnityEngine.Random.Range(0, length);
             
-            while/*already*/(_spawned[randomIndex])
+            while/*already*/(_spawned[index])
             {
-                randomIndex++;
+                index++;
 
-                if(randomIndex == length)
-                    randomIndex = 0;
+                if(index == length)
+                    index = 0;
             }
 
-            _spawnedIndexes.Enqueue(randomIndex);
-            _spawned[randomIndex] = true;
+            _spawnedIndexes.Enqueue(index);
+            _spawned[index] = true;
 
-            index = randomIndex;
-            return LevelParts[randomIndex];
+            return LevelParts[index];
         }
         else
         {
-            index = UnityEngine.Random.Range(0, LevelParts.Length);
+            var index = UnityEngine.Random.Range(0, LevelParts.Length);
             return LevelParts[index];
         }
     }
