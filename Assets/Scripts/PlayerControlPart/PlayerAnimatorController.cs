@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,10 +11,24 @@ public class PlayerAnimatorController : MonoBehaviour
     AnimState _currentState;
     PlayerDirection _currentDireciton;
 
+    string[] _stateNames;
+    int _stateNamesLength;
+
     // Start is called before the first frame update
     void Start()
     {
         _currentState = AnimState.Run;
+
+        //Reason described in ApplyNewState method
+        //(-)Expensive (-)Configuration in runtime (+)Changes of AnimState enum won't affect this script
+        //var list = new List<string>(Enum.GetNames(typeof(AnimState)));
+        //list.Remove("UNDEFINED");
+        //_stateNames = list.ToArray();
+        //_stateNamesLength = _stateNames.Length;
+
+        //(+)Cheaper (+)Configuration in compile-time (-)Changes of AnimState enum will affect this script
+        _stateNames = new string[]{ "Run", "Jump", "MidAir", "Fall", "Dash", "DashDown", "HitGround", "HitCeiling", "Die" };
+        _stateNamesLength = _stateNames.Length;
     }
 
     public void Handle_PlayerAction(PlayerActionType actionType)
@@ -22,7 +37,7 @@ public class PlayerAnimatorController : MonoBehaviour
         {
             case PlayerActionType.Jump:             ConsiderApplyingNewState(AnimState.Jump);   break;
             case PlayerActionType.DashForward:      ConsiderApplyingNewState(AnimState.Dash);   break;
-            case PlayerActionType.DashForwardEnd:   DefineCurrentState();            break;
+            case PlayerActionType.DashForwardEnd:   if (_currentState != AnimState.Die) { DefineCurrentState(); }   break;
             case PlayerActionType.DashDown:         ConsiderApplyingNewState(AnimState.DashDown);   break;
         }
     }
@@ -56,12 +71,32 @@ public class PlayerAnimatorController : MonoBehaviour
 
     public void Handle_AnimationEnded()
     {
-        //Bug: Sometimes if user presses dash button during landing HitGround animation stucks even though _currentState is correct, this is a workaround
-        if (_currentState == AnimState.Dash)
-            ApplyNewState(_currentState);
         //Bug: Sometimes this event is called even though animation already switched, this is a workaround
-        else if (_currentState == AnimState.HitGround || _currentState == AnimState.HitCeiling)
-            DefineCurrentState();
+        switch (_currentState)
+        {
+            case AnimState.HitGround:
+            case AnimState.HitCeiling:
+                DefineCurrentState();
+                break;
+            case AnimState.Die:
+                /*Ignore*/
+                break;
+            default:
+                ApplyNewState(_currentState);
+                break;
+        }
+    }
+
+    void ApplyNewState(AnimState newState)
+    {
+        //Bug: In rare cases two animation triggers may be set at the same time resulting in unwanted animation switch behaviour, this is a workaround
+        for (int i = 0; i < _stateNamesLength; i++)
+        {
+            Animator.ResetTrigger(_stateNames[i]);
+        }
+
+        Animator.SetTrigger(newState.ToString());
+        _currentState = newState;
     }
 
     void DefineCurrentState()
@@ -83,12 +118,6 @@ public class PlayerAnimatorController : MonoBehaviour
                 }
                 break;
         }
-    }
-
-    void ApplyNewState(AnimState newState)
-    {
-        Animator.SetTrigger(newState.ToString());
-        _currentState = newState;
     }
 
     void ConsiderApplyingNewState(AnimState newState)

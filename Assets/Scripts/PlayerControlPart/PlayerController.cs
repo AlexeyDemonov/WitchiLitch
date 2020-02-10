@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
                     Fall();
                     break;
                 default:
-                    Debug.LogError("PlayerController.Handle_ActionRequest: Unknown actionType");
+                    Debug.LogError("PlayerController.Handle_ActionRequest: Incorrect actionType");
                     break;
             }
         }
@@ -62,9 +62,7 @@ public class PlayerController : MonoBehaviour
     {
         if(isPlayerDashing)
         {
-            StopCoroutine(_removeDashCoroutine);
-            _removeDashCoroutine = null;
-            _rigidbody.gravityScale = 1f;
+            CancelDash();
         }
 
         _alive = false;
@@ -129,12 +127,29 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
     {
-        if(!isPlayerDashing && isPlayerGrounded)
+        if(isPlayerDashing || isPlayerGrounded)
         {
+            if(isPlayerDashing)
+                CancelDash();
+            else
+                AllowAirDash();
+
             _rigidbody.velocity = Vector2.zero;
             _rigidbody.AddForce(new Vector2(0f, JumpForce), ForceMode2D.Impulse);
-            AllowAirDash();
             PlayerAction?.Invoke(PlayerActionType.Jump);
+        }
+    }
+
+    void Fall()
+    {
+        if (!isPlayerGrounded)
+        {
+            if (isPlayerDashing)
+                CancelDash();
+
+            _rigidbody.velocity = Vector2.zero;
+            _rigidbody.AddForce(new Vector2(0f, -FallForce), ForceMode2D.Impulse);
+            PlayerAction?.Invoke(PlayerActionType.DashDown);
         }
     }
 
@@ -153,18 +168,24 @@ public class PlayerController : MonoBehaviour
     {
         yield return _dashDuration;
 
-        _rigidbody.gravityScale = 1f;
         _removeDashCoroutine = null;
-        PlayerAction?.Invoke(PlayerActionType.DashForwardEnd);
+        RemoveDash();
     }
 
-    void Fall()
+    void CancelDash()
     {
-        if (!isPlayerDashing && !isPlayerGrounded)
+        if(_removeDashCoroutine != null)
         {
-            _rigidbody.velocity = Vector2.zero;
-            _rigidbody.AddForce(new Vector2(0f, -FallForce), ForceMode2D.Impulse);
-            PlayerAction?.Invoke(PlayerActionType.DashDown);
+            StopCoroutine(_removeDashCoroutine);
+            _removeDashCoroutine = null;
         }
+
+        RemoveDash();
+    }
+
+    void RemoveDash()
+    {
+        PlayerAction?.Invoke(PlayerActionType.DashForwardEnd);
+        _rigidbody.gravityScale = 1f;
     }
 }
