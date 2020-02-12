@@ -103,7 +103,7 @@ public class PlayerHitDetectionSystem : MonoBehaviour
     // Implement this OnDrawGizmosSelected if you want to draw gizmos only if the object is selected
     private void OnDrawGizmos()
     {
-        if((DrawPlatformSideHitGizmo || DrawEnemySideHitGizmo) && Application.isPlaying)
+        if((DrawPlatformSideHitGizmo || DrawEnemySideHitGizmo)/* && Application.isPlaying*/)
         {
             Vector3 currentPosition = this.transform.position;
 
