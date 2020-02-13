@@ -55,5 +55,8 @@ public class LevelSceneInitializer : MonoBehaviour
         PlayerDirectionDefiner.DirectionChanged += PlayerAnimatorController.Handle_PlayerDirectionChanged;
 
         UIToActionRequestConverter.Request_Action += PlayerController.Handle_ActionRequest;
+
+        //Play audio
+        MusicBox.GetInstance().Play(1);
     }
 }
