@@ -60,6 +60,9 @@ public class LevelSceneInitializer : MonoBehaviour
         //Play audio
         MusicBox.GetInstance()?.Play(1);
 
+        var settings = SettingsController.GetInstance().Handle_LoadSettingsRequest();
+        SoundEffectsBox.AcceptSettings(settings);
+
         PlayerController.PlayerAction += SoundEffectsBox.Handle_PlayerAction;
         PlayerHitDetectionSystem.PlayerHittedObject += SoundEffectsBox.Handle_PlayerHittedObject;
         PlayerHitDetectionSystem.PlayerCrashed += SoundEffectsBox.Handle_PlayerCrashed;

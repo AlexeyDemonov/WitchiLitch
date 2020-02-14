@@ -13,6 +13,7 @@ public class MusicBox : MonoBehaviour
     static MusicBox _singleInstance;
     int _curentlyPlaying;
     AudioSource _player;
+    float _originalVolume;
 
     Coroutine _fadeOutFadeinCoroutine;
 
@@ -25,12 +26,24 @@ public class MusicBox : MonoBehaviour
             _singleInstance = this;
             _curentlyPlaying = -1;
             _player = GetComponent<AudioSource>();
+            _originalVolume = Volume;
             DontDestroyOnLoad(this.gameObject);
         }
         else/*this is a second instance*/
         {
             Destroy(this.gameObject);
         }
+    }
+
+    public void AcceptSettings(SettingsEventArgs args)
+    {
+        if(args.MusicOn)
+            Volume = _originalVolume;
+        else
+            Volume = 0f;
+
+        if(_player.volume != Volume)
+            _player.volume = Volume;
     }
 
     public void Play(int clipIndex)

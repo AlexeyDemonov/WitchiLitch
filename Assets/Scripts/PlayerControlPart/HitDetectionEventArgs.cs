@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public class HitDetectionEventArgs
+public class HitDetectionEventArgs : EventArgs
 {
     public GameObject HittedObject;
     public HittedObjectType HittedObjectType;

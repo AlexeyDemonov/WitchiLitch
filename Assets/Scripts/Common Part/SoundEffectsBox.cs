@@ -14,10 +14,16 @@ public class SoundEffectsBox : MonoBehaviour
     public float SoundEffectsVolume;
 
     Vector3 _position;
+    bool _muted;
 
     private void Awake()
     {
         _position = this.transform.position;
+    }
+
+    public void AcceptSettings(SettingsEventArgs args)
+    {
+        _muted = !args.SoundOn;
     }
 
     public void Handle_PlayerAction(PlayerActionType actionType)
@@ -62,6 +68,9 @@ public class SoundEffectsBox : MonoBehaviour
 
     void PlayRandomSound(params AudioClip[] sounds)
     {
+        if(_muted)
+            return;
+
         int length = sounds.Length;
 
         AudioClip soundToPlay = null;
