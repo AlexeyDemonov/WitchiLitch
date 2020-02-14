@@ -29,7 +29,9 @@ public class RegularEnemyController : EnemyController
     void StopMoving()
     {
         //I'm not very proud of this approach but it solves more problems than it causes
-        this.gameObject.GetComponentInParent<EnemyMover>()?.Stop();
+        //this.gameObject.GetComponentInParent<EnemyMover>()?.Stop();
+        //or use this? Escobar axiom indeed - I don't like them both
+        SendMessageUpwards("Stop", null, SendMessageOptions.DontRequireReceiver);
     }
 
     public override void Handle_Hit(HitDirection hitDirection)

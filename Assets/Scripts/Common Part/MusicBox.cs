@@ -7,7 +7,8 @@ public class MusicBox : MonoBehaviour
 {
     public AudioClip[] AudioClips;
     public float FadeStep;
-    public float MaxVolume;
+    [Range(0f,1f)]
+    public float Volume;
 
     static MusicBox _singleInstance;
     int _curentlyPlaying;
@@ -24,7 +25,6 @@ public class MusicBox : MonoBehaviour
             _singleInstance = this;
             _curentlyPlaying = -1;
             _player = GetComponent<AudioSource>();
-            _player.volume = MaxVolume;
             DontDestroyOnLoad(this.gameObject);
         }
         else/*this is a second instance*/
@@ -50,12 +50,11 @@ public class MusicBox : MonoBehaviour
     IEnumerator FadeOutFadeIn(int newClipIndex)
     {
         //Fade out
-        do
+        while(_player.volume > 0f)
         {
             _player.volume -= FadeStep;
             yield return null;
-        } while(_player.volume > 0f);
-
+        }
 
         //Change clip
         _player.Stop();
@@ -63,11 +62,11 @@ public class MusicBox : MonoBehaviour
         _player.Play();
 
         //Fade in
-        do
+        while (_player.volume < Volume)
         {
             _player.volume += FadeStep;
             yield return null;
-        } while (_player.volume < MaxVolume);
+        }
 
         _fadeOutFadeinCoroutine = null;
     }

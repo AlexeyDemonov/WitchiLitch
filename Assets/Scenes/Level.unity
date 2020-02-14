@@ -610,6 +610,7 @@ Transform:
   - {fileID: 1664387375}
   - {fileID: 431985923}
   - {fileID: 843094849}
+  - {fileID: 1426650025}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -707,7 +708,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &516963816
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1920,6 +1921,66 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1426650024
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1426650025}
+  - component: {fileID: 1426650026}
+  m_Layer: 0
+  m_Name: SoundEffectsBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1426650025
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426650024}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 494642810}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1426650026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426650024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7dfa65d36e1c148aefd76026c1eefa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  JumpSounds:
+  - {fileID: 8300000, guid: 9050ee1191ad7ab458a7f34c449f488a, type: 3}
+  - {fileID: 8300000, guid: a05e8e6011c861e478aba7a4a7d98e62, type: 3}
+  HitSounds:
+  - {fileID: 8300000, guid: 8fa577dcd8ddba24399435d48df60f49, type: 3}
+  - {fileID: 8300000, guid: 4295c8a7b84da5a4f982aa47d94fbffd, type: 3}
+  - {fileID: 8300000, guid: cd3903de8552d5744a4aa56cb280cba5, type: 3}
+  DashSounds:
+  - {fileID: 8300000, guid: ca681d670413d0049a2d38cdcaea0a14, type: 3}
+  FruitSmashSounds:
+  - {fileID: 8300000, guid: 4539306a75729eb4d8e66ee05a0cfe9f, type: 3}
+  - {fileID: 8300000, guid: 495f6ec6b7155cc44b48b516c2e25be6, type: 3}
+  - {fileID: 8300000, guid: 5adf1a1d1b56a3c4aaba64dd3459311d, type: 3}
+  DieSounds:
+  - {fileID: 8300000, guid: f61208eefa8eb7c428f6af3d47c31f0c, type: 3}
+  EasterEggFallSound: {fileID: 8300000, guid: 781cf878945de1a40bf70c799bf1a2a1, type: 3}
+  SoundEffectsVolume: 1
 --- !u!1 &1449719865
 GameObject:
   m_ObjectHideFlags: 0
@@ -2309,7 +2370,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1631045349
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3345,7 +3406,8 @@ MonoBehaviour:
   - {fileID: 519420030}
   - {fileID: 671709286}
   EnemyHitRegistrationSystem: {fileID: 1664387376}
-  UIToActionRequestConverter: {fileID: 431985924}
+  UIToActionRequestConverter: {fileID: 843094850}
+  SoundEffectsBox: {fileID: 1426650026}
 --- !u!1 &2066687190
 GameObject:
   m_ObjectHideFlags: 0

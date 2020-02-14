@@ -16,6 +16,7 @@ public class LevelSceneInitializer : MonoBehaviour
     public VerticalFollower[] VerticalFollowers;
     public EnemyHitRegistrationSystem EnemyHitRegistrationSystem;
     public UIToActionRequestConverter UIToActionRequestConverter;
+    public SoundEffectsBox SoundEffectsBox;
 
     private void Awake()
     {
@@ -57,6 +58,11 @@ public class LevelSceneInitializer : MonoBehaviour
         UIToActionRequestConverter.Request_Action += PlayerController.Handle_ActionRequest;
 
         //Play audio
-        MusicBox.GetInstance().Play(1);
+        MusicBox.GetInstance()?.Play(1);
+
+        PlayerController.PlayerAction += SoundEffectsBox.Handle_PlayerAction;
+        PlayerHitDetectionSystem.PlayerHittedObject += SoundEffectsBox.Handle_PlayerHittedObject;
+        PlayerHitDetectionSystem.PlayerCrashed += SoundEffectsBox.Handle_PlayerCrashed;
+        FallChecker.Fallen += SoundEffectsBox.Handle_PlayerFallen;
     }
 }
