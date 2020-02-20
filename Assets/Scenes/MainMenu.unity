@@ -2098,10 +2098,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AudioClips:
-  - {fileID: 8300000, guid: 197dc79d59288e847b87ce92c9df924f, type: 3}
-  - {fileID: 8300000, guid: 2a185dfe39277014b9def4154a75870b, type: 3}
+  - {fileID: 8300000, guid: 3c867fc0266da1f419c3ea1663214cbb, type: 3}
+  - {fileID: 8300000, guid: 5c9ccb1168cf9a04c905ef495aace990, type: 3}
   FadeStep: 0.02
-  Volume: 1
+  Volume: 0.8
 --- !u!1 &1636854323
 GameObject:
   m_ObjectHideFlags: 0
