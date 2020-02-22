@@ -48,6 +48,7 @@ public class RegularEnemyController : EnemyController
                 _animator.SetTrigger("DieToUp");
                 break;
             case HitDirection.RightSide:
+            case HitDirection.LeftSide:
                 _animator.SetTrigger("DieToSide");
                 break;
         }
