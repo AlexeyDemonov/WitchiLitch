@@ -18,6 +18,7 @@ public class VerticalFollower : MonoBehaviour
 
     const float DEAD_ZONE = 0.2f;
 
+    Vector3 _ourCurrentPosition;
     PlayerDirection _currentPlayerDirection;
 
 
@@ -32,7 +33,8 @@ public class VerticalFollower : MonoBehaviour
     // Start is called just before any of the Update methods is called the first time
     private void Start()
     {
-        _ourStartY = this.transform.position.y;
+        _ourCurrentPosition = this.transform.position;
+        _ourStartY = _ourCurrentPosition.y;
         _lerping = LerpingSpeed > 0f;
         _offset = RiseOffset != 0f || FallOffset != 0;
 
@@ -46,7 +48,8 @@ public class VerticalFollower : MonoBehaviour
     private void LateUpdate()
     {
         float targetY = Player.position.y;
-        float ourCurrentY = this.transform.position.y;
+        _ourCurrentPosition = this.transform.position;
+        float ourCurrentY = _ourCurrentPosition.y;
 
         float yToMoveTo = CalculateYPosToMoveTo(targetY);
 
@@ -78,11 +81,10 @@ public class VerticalFollower : MonoBehaviour
 
     void MoveToDefindedHight(float targetY)
     {
-        Vector3 currentPosition = this.transform.position;
-        Vector3 newPosition = new Vector3(currentPosition.x, targetY, currentPosition.z);
+        Vector3 newPosition = new Vector3(_ourCurrentPosition.x, targetY, _ourCurrentPosition.z);
 
         if(_lerping)
-            this.transform.position = Vector3.Lerp(currentPosition, newPosition, LerpingSpeed * Time.deltaTime);
+            this.transform.position = Vector3.Lerp(_ourCurrentPosition, newPosition, LerpingSpeed * Time.deltaTime);
         else
             this.transform.position = newPosition;
     }

@@ -15,13 +15,20 @@ public class CustomHotkeysSetter
     [MenuItem("GameObject/CustomHotkeys/ResetTransform #R")]
     static void ResetTransform()
     {
-        var selectedObject = Selection.activeGameObject;
-
-        if(selectedObject != null)
+        foreach (var gameObject in Selection.gameObjects)
         {
-            selectedObject.transform.localPosition = Vector3.zero;
-            selectedObject.transform.localRotation = Quaternion.identity;
-            selectedObject.transform.localScale = Vector3.one;
+            gameObject.transform.localPosition = Vector3.zero;
+            gameObject.transform.localRotation = Quaternion.identity;
+            gameObject.transform.localScale = Vector3.one;
+        }
+    }
+
+    [MenuItem("GameObject/CustomHotkeys/ToggleActive #A")]
+    static void ToggleActive()
+    {
+        foreach (var gameObject in Selection.gameObjects)
+        {
+            gameObject.SetActive( !gameObject.activeSelf );
         }
     }
 }

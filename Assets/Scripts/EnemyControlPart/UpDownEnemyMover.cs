@@ -89,20 +89,10 @@ public class UpDownEnemyMover : EnemyMover
     {
         if(DrawGizmos)
         {
-            if(Application.isPlaying)
-            {
-                Gizmos.DrawCube(new Vector3(_currentPosition.x, _upBorder, _currentPosition.z), new Vector3(2f, 0.1f, 0.1f));
-                Gizmos.DrawCube(new Vector3(_currentPosition.x, _downBorder, _currentPosition.z), new Vector3(2f, 0.1f, 0.1f));
-            }
-            else if(Application.isEditor)
-            {
-                Vector3 currentPosition = this.transform.localPosition;
-                float upBorder = currentPosition.y + MoveUpBy;
-                float downBorder = currentPosition.y - MoveDownBy;
+            Vector3 currentPosition = this.transform.position;
 
-                Gizmos.DrawCube(new Vector3(currentPosition.x, upBorder, currentPosition.z), new Vector3(2f, 0.1f, 0.1f));
-                Gizmos.DrawCube(new Vector3(currentPosition.x, downBorder, currentPosition.z), new Vector3(2f, 0.1f, 0.1f));
-            }
+            Gizmos.DrawCube(new Vector3(currentPosition.x, _upBorder, currentPosition.z), new Vector3(2f, 0.1f, 0.1f));
+            Gizmos.DrawCube(new Vector3(currentPosition.x, _downBorder, currentPosition.z), new Vector3(2f, 0.1f, 0.1f));
         }
     }
 }
