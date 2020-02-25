@@ -5,10 +5,21 @@ using UnityEngine;
 public class MainMenuInitializer : MonoBehaviour
 {
     public MainMenuUIController MainMenuUIController;
+    public BaseScroller[] Scrollers;
+    public ScrollSpeedDefiner ScrollSpeedDefiner;
+
     MusicBox _musicBox;
     SettingsController _settingsController;
 
     static bool _firstLaunchPassed;
+
+    private void Awake()
+    {
+        foreach (var scroller in Scrollers)
+        {
+            scroller.Request_ScrollSpeed += ScrollSpeedDefiner.GetCurrentScrollSpeed;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()

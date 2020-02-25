@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ public class RegularEnemyController : EnemyController
     Collider2D _collider;
     Animator _animator;
     bool _colliderDisabled;
+
+    public static event Action EnemyDown;
 
     // Start is called just before any of the Update methods is called the first time
     private void Start()
@@ -38,7 +41,12 @@ public class RegularEnemyController : EnemyController
     {
         DisableCollider();
         StopMoving();
+        PlayAnimation(hitDirection);
+        EnemyDown?.Invoke();
+    }
 
+    private void PlayAnimation(HitDirection hitDirection)
+    {
         switch (hitDirection)
         {
             case HitDirection.Above:

@@ -67,12 +67,22 @@ public class LevelScroller : BaseScroller
 
     void PrebuildLevel()
     {
-        //Instantiate starting part
-        var instanceOfStartingPart = Instantiate<SpriteRenderer>(StartingPart, _startingPosition, Quaternion.identity);
+        if(StartingPart != null)
+        {
+            //Instantiate starting part
+            var instanceOfStartingPart = Instantiate<SpriteRenderer>(StartingPart, _startingPosition, Quaternion.identity);
 
-        //Add starting part
-        _partsChain.Enqueue(instanceOfStartingPart);
-        _lastPart = instanceOfStartingPart;
+            //Add starting part
+            _partsChain.Enqueue(instanceOfStartingPart);
+            _lastPart = instanceOfStartingPart;
+        }
+        else
+        {
+            var firstPart = DefineNextPart();
+            var instanceOfFirstPart = Instantiate<SpriteRenderer>(firstPart, _startingPosition, Quaternion.identity);
+            _partsChain.Enqueue(instanceOfFirstPart);
+            _lastPart = instanceOfFirstPart;
+        }
 
         //Add other parts
         for (int i = 1; i < PartsCount; i++)
@@ -83,7 +93,7 @@ public class LevelScroller : BaseScroller
             part.transform.SetParent(this.transform);
 
         //Calculate bound
-        _bound = _startingPosition.x - GetFullSize(StartingPart);
+        _bound = _startingPosition.x - GetFullSize(_partsChain.Peek());
     }
 
     // Update is called once per frame
