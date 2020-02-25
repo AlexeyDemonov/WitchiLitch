@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class UpDownEnemyMover : EnemyMover
 {
@@ -34,7 +32,7 @@ public class UpDownEnemyMover : EnemyMover
 
         int randomResult = UnityEngine.Random.Range(-1, 2);
 
-        if(randomResult == up)
+        if (randomResult == up)
         {
             Vector3 startingPosition = new Vector3(_currentPosition.x, _upBorder, _currentPosition.z);
             this.transform.localPosition = startingPosition;
@@ -55,16 +53,16 @@ public class UpDownEnemyMover : EnemyMover
     // Update is called once per frame
     void Update()
     {
-        if(base.MoveAllowed)
+        if (base.MoveAllowed)
         {
-            if(_movingUp)
+            if (_movingUp)
                 this.transform.localPosition += Vector3.up * MoveSpeed * Time.deltaTime;
             else
                 this.transform.localPosition += Vector3.down * MoveSpeed * Time.deltaTime;
 
             _currentPosition = this.transform.localPosition;
 
-            if(IsPassedBound)
+            if (IsPassedBound)
                 ChangeDirection();
         }
     }
@@ -73,7 +71,7 @@ public class UpDownEnemyMover : EnemyMover
     {
         get
         {
-            if(_movingUp)
+            if (_movingUp)
                 return _currentPosition.y > _upBorder;
             else
                 return _currentPosition.y < _downBorder;
@@ -87,7 +85,7 @@ public class UpDownEnemyMover : EnemyMover
 
     private void OnDrawGizmos()
     {
-        if(DrawGizmos)
+        if (DrawGizmos)
         {
             Vector3 currentPosition = this.transform.position;
 

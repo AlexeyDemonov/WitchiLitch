@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class BackgroundScroller : BaseScroller
@@ -29,11 +26,11 @@ public class BackgroundScroller : BaseScroller
     // Update is called once per frame
     void Update()
     {
-        if(base.CurrentScrollSpeed != 0f)
+        if (base.CurrentScrollSpeed != 0f)
         {
             transform.localPosition += Vector3.left * base.CurrentScrollSpeed * Time.deltaTime;
 
-            if(IsPassedBound)
+            if (IsPassedBound)
                 MoveToOppositeBound();
         }
     }
@@ -48,11 +45,10 @@ public class BackgroundScroller : BaseScroller
             return (movingLeft && xPos < _leftBound) || (!movingLeft && xPos > _rightBound);
         }
     }
-        
 
     void MoveToOppositeBound()
     {
-        if(base.CurrentScrollSpeed > 0f)
+        if (base.CurrentScrollSpeed > 0f)
             transform.position += _distanceBetweenBounds;
         else
             transform.position -= _distanceBetweenBounds;
@@ -60,9 +56,9 @@ public class BackgroundScroller : BaseScroller
 
     private void OnDrawGizmos()
     {
-        if(DrawGizmos && Application.isPlaying)
+        if (DrawGizmos && Application.isPlaying)
         {
-            Gizmos.DrawCube(new Vector3(_rightBound, this.transform.position.y, this.transform.position.z), new Vector3(0.1f,2f,0.1f));
+            Gizmos.DrawCube(new Vector3(_rightBound, this.transform.position.y, this.transform.position.z), new Vector3(0.1f, 2f, 0.1f));
             Gizmos.DrawCube(new Vector3(_leftBound, this.transform.position.y, this.transform.position.z), new Vector3(0.1f, 2f, 0.1f));
         }
     }

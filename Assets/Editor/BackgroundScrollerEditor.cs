@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Reflection;
 using UnityEditor;
-using System.Reflection;
-using System;
+using UnityEngine;
 
 [CustomEditor(typeof(BackgroundScroller))]
 public class BackgroundScrollerEditor : Editor

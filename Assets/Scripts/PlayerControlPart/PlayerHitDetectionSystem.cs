@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
@@ -14,6 +12,7 @@ public class PlayerHitDetectionSystem : MonoBehaviour
     public bool DrawEnemySideHitGizmo;
 
     public event Action PlayerCrashed;
+
     public event Action<HitDetectionEventArgs> PlayerHittedObject;
 
     bool _dashing;
@@ -45,10 +44,10 @@ public class PlayerHitDetectionSystem : MonoBehaviour
         var objectType   = DefineHittedObjectType(collision.transform);
         var hitPoint     = collision.GetContact(0).point;
         var hitDirection = DefineDirection(hitPoint, objectType);
-        
+
         var eventArgs = new HitDetectionEventArgs() { HittedObject = hittedObject, HittedObjectType = objectType, HitPoint = hitPoint, HitDirection = hitDirection };
 
-        if(IsACrash(eventArgs))
+        if (IsACrash(eventArgs))
             PlayerCrashed?.Invoke();
         else
             PlayerHittedObject?.Invoke(eventArgs);
@@ -56,7 +55,7 @@ public class PlayerHitDetectionSystem : MonoBehaviour
 
     HittedObjectType DefineHittedObjectType(Transform hittedObject)
     {
-        if(hittedObject.CompareTag("Enemy"))
+        if (hittedObject.CompareTag("Enemy"))
             return HittedObjectType.Enemy;
         else/*if (hittedObject.CompareTag("Platform"))*/
             return HittedObjectType.Platform;
@@ -76,15 +75,15 @@ public class PlayerHitDetectionSystem : MonoBehaviour
 
     bool IsACrash(HitDetectionEventArgs args)
     {
-        if(args.HitDirection == HitDirection.RightSide)
+        if (args.HitDirection == HitDirection.RightSide)
         {
-            if(args.HittedObjectType == HittedObjectType.Platform)
+            if (args.HittedObjectType == HittedObjectType.Platform)
                 return true;
 
             if (args.HittedObjectType == HittedObjectType.Enemy && _dashing == false)
                 return true;
         }
-        
+
         /*else*/
         return false;
     }
@@ -92,8 +91,8 @@ public class PlayerHitDetectionSystem : MonoBehaviour
     void CheckIfJumpHitEnemyUnderPlayer()
     {
         var hit = EnemyOnJumpHitChecker.GroundCheckHit();
-        
-        if(hit.collider != null && DefineHittedObjectType(hit.transform) == HittedObjectType.Enemy)
+
+        if (hit.collider != null && DefineHittedObjectType(hit.transform) == HittedObjectType.Enemy)
         {
             var eventArgs = new HitDetectionEventArgs() { HittedObject = hit.collider.gameObject, HittedObjectType = HittedObjectType.Enemy, HitPoint = hit.point, HitDirection = HitDirection.Above };
             PlayerHittedObject?.Invoke(eventArgs);
@@ -103,11 +102,11 @@ public class PlayerHitDetectionSystem : MonoBehaviour
     // Implement this OnDrawGizmosSelected if you want to draw gizmos only if the object is selected
     private void OnDrawGizmos()
     {
-        if((DrawPlatformSideHitGizmo || DrawEnemySideHitGizmo)/* && Application.isPlaying*/)
+        if ((DrawPlatformSideHitGizmo || DrawEnemySideHitGizmo)/* && Application.isPlaying*/)
         {
             Vector3 currentPosition = this.transform.position;
 
-            if(DrawPlatformSideHitGizmo)
+            if (DrawPlatformSideHitGizmo)
             {
                 Gizmos.DrawCube(new Vector3(currentPosition.x, currentPosition.y + PlatformSideHitRange, currentPosition.z), new Vector3(2f, 0.1f, 0.1f));
                 Gizmos.DrawCube(new Vector3(currentPosition.x, currentPosition.y - PlatformSideHitRange, currentPosition.z), new Vector3(2f, 0.1f, 0.1f));

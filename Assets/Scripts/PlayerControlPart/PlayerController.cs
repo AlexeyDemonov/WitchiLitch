@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -38,19 +37,22 @@ public class PlayerController : MonoBehaviour
 
     public void Handle_ActionRequest(PlayerActionType actionType)
     {
-        if(_alive)
+        if (_alive)
         {
             switch (actionType)
             {
                 case PlayerActionType.Jump:
                     Jump();
                     break;
+
                 case PlayerActionType.DashForward:
                     Dash();
                     break;
+
                 case PlayerActionType.DashDown:
                     Fall();
                     break;
+
                 default:
                     Debug.LogError("PlayerController.Handle_ActionRequest: Incorrect actionType");
                     break;
@@ -60,7 +62,7 @@ public class PlayerController : MonoBehaviour
 
     public void Handle_PalyerCrashed()
     {
-        if(isPlayerDashing)
+        if (isPlayerDashing)
         {
             CancelDash();
         }
@@ -73,7 +75,7 @@ public class PlayerController : MonoBehaviour
 
     public void Handle_PlayerHittedObject(HitDetectionEventArgs args)
     {
-        if(args.HitDirection == HitDirection.Above)
+        if (args.HitDirection == HitDirection.Above)
         {
             AllowAirDash();
         }
@@ -85,7 +87,7 @@ public class PlayerController : MonoBehaviour
         {
             foreach (var checker in GroundCheckers)
             {
-                if(checker.IsGrounded)
+                if (checker.IsGrounded)
                     return true;
             }
 
@@ -103,11 +105,11 @@ public class PlayerController : MonoBehaviour
     {
         get
         {
-            if(isPlayerGrounded)
+            if (isPlayerGrounded)
             {
                 return true;
             }
-            else if(_airDashAllowed)
+            else if (_airDashAllowed)
             {
                 _airDashAllowed = false;
                 return true;
@@ -121,15 +123,15 @@ public class PlayerController : MonoBehaviour
 
     void AllowAirDash()
     {
-        if(!_airDashAllowed)
+        if (!_airDashAllowed)
             _airDashAllowed = true;
     }
 
     void Jump()
     {
-        if(isPlayerDashing || isPlayerGrounded)
+        if (isPlayerDashing || isPlayerGrounded)
         {
-            if(isPlayerDashing)
+            if (isPlayerDashing)
                 CancelDash();
             else
                 AllowAirDash();
@@ -155,7 +157,7 @@ public class PlayerController : MonoBehaviour
 
     void Dash()
     {
-        if(!isPlayerDashing && isDashAllowed)
+        if (!isPlayerDashing && isDashAllowed)
         {
             _rigidbody.velocity = Vector2.zero;
             _rigidbody.gravityScale = 0f;
@@ -174,7 +176,7 @@ public class PlayerController : MonoBehaviour
 
     void CancelDash()
     {
-        if(_removeDashCoroutine != null)
+        if (_removeDashCoroutine != null)
         {
             StopCoroutine(_removeDashCoroutine);
             _removeDashCoroutine = null;

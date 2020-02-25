@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class SettingsController
 {
@@ -14,7 +11,7 @@ public class SettingsController
 
     static SettingsController()
     {
-        if(_singleInstance == null)//Actually this 'if' statement is not needed, this ctor will be called only once
+        if (_singleInstance == null)//Actually this 'if' statement is not needed, this ctor will be called only once
             _singleInstance = new SettingsController();
     }
 
@@ -40,13 +37,14 @@ public class SettingsController
 
     public bool MusicOn => _currentSettings.MusicOn;
     public bool SoundOn => _currentSettings.SoundOn;
+
     public SettingsEventArgs Handle_LoadSettingsRequest() => _currentSettings;
 
     public void Handle_SaveSettingsRequest(SettingsEventArgs args)
     {
         SaveSettings(args);
     }
-    
+
     void SaveSettings(SettingsEventArgs container)
     {
         _currentSettings = container;

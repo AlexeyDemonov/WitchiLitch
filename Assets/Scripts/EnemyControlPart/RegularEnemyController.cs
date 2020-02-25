@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
@@ -52,9 +50,11 @@ public class RegularEnemyController : EnemyController
             case HitDirection.Above:
                 _animator.SetTrigger("DieToDown");
                 break;
+
             case HitDirection.Below:
                 _animator.SetTrigger("DieToUp");
                 break;
+
             case HitDirection.RightSide:
             case HitDirection.LeftSide:
                 _animator.SetTrigger("DieToSide");

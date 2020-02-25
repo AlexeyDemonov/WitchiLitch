@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
@@ -7,7 +6,8 @@ public class MusicBox : MonoBehaviour
 {
     public AudioClip[] AudioClips;
     public float FadeStep;
-    [Range(0f,1f)]
+
+    [Range(0f, 1f)]
     public float Volume;
 
     static MusicBox _singleInstance;
@@ -21,7 +21,7 @@ public class MusicBox : MonoBehaviour
 
     private void Awake()
     {
-        if(_singleInstance == null)
+        if (_singleInstance == null)
         {
             _singleInstance = this;
             _curentlyPlaying = -1;
@@ -37,20 +37,20 @@ public class MusicBox : MonoBehaviour
 
     public void AcceptSettings(SettingsEventArgs args)
     {
-        if(args.MusicOn)
+        if (args.MusicOn)
             Volume = _originalVolume;
         else
             Volume = 0f;
 
-        if(_player.volume != Volume)
+        if (_player.volume != Volume)
             _player.volume = Volume;
     }
 
     public void Play(int clipIndex)
     {
-        if(clipIndex != _curentlyPlaying && clipIndex < AudioClips.Length)
+        if (clipIndex != _curentlyPlaying && clipIndex < AudioClips.Length)
         {
-            if(_fadeOutFadeinCoroutine != null)
+            if (_fadeOutFadeinCoroutine != null)
             {
                 StopCoroutine(_fadeOutFadeinCoroutine);
             }
@@ -63,7 +63,7 @@ public class MusicBox : MonoBehaviour
     IEnumerator FadeOutFadeIn(int newClipIndex)
     {
         //Fade out
-        while(_player.volume > 0f)
+        while (_player.volume > 0f)
         {
             _player.volume -= FadeStep;
             yield return null;

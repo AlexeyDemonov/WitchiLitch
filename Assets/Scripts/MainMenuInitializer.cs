@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MainMenuInitializer : MonoBehaviour
 {
@@ -31,7 +29,7 @@ public class MainMenuInitializer : MonoBehaviour
 
         MainMenuUIController.AcceptSettings(settings);
 
-        if(!_firstLaunchPassed)
+        if (!_firstLaunchPassed)
         {
             _musicBox.AcceptSettings(settings);
             _settingsController.SettingsChanged += _musicBox.AcceptSettings;

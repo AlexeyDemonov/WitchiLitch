@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ScrollSpeedDefiner : MonoBehaviour
@@ -8,6 +6,7 @@ public class ScrollSpeedDefiner : MonoBehaviour
     //====================================================================
     //Fields
     public float StartScrollSpeed;
+
     public float BaseIncreaseSpeedBy;
 
     private float _currentScrollSpeed;
@@ -24,7 +23,7 @@ public class ScrollSpeedDefiner : MonoBehaviour
 
         set
         {
-            if(value != _currentScrollSpeed)
+            if (value != _currentScrollSpeed)
             {
                 _currentScrollSpeed = value;
                 ScrollSpeedChanged?.Invoke(_currentScrollSpeed);

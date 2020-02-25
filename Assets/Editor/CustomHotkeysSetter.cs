@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using UnityEditor;
+﻿using UnityEditor;
+using UnityEngine;
 
 public class CustomHotkeysSetter
 {
@@ -28,7 +28,7 @@ public class CustomHotkeysSetter
     {
         foreach (var gameObject in Selection.gameObjects)
         {
-            gameObject.SetActive( !gameObject.activeSelf );
+            gameObject.SetActive(!gameObject.activeSelf);
         }
     }
 }

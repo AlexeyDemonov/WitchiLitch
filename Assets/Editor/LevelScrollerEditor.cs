@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEditor;
 using UnityEngine;
-using UnityEditor;
 
 [CustomEditor(typeof(LevelScroller))]
 public class LevelScrollerEditor : Editor
@@ -16,12 +14,11 @@ public class LevelScrollerEditor : Editor
         _targetInstance.BossLevelReady += () => Debug.Log("Boss level ready");
     }
 
-
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
 
-        if(GUILayout.Button("Start boss level"))
+        if (GUILayout.Button("Start boss level"))
         {
             _targetInstance.Handle_BossLevelStartRequest();
         }

@@ -1,8 +1,6 @@
 ﻿using System.Reflection;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 [CustomEditor(typeof(ForwardEnemyMover))]
 public class ForwardEnemyMoverEditor : Editor
@@ -16,7 +14,6 @@ public class ForwardEnemyMoverEditor : Editor
         _targetInstance = (ForwardEnemyMover)target;
         _actualMoveSpeedFieldInfo = _targetInstance.GetType().GetField("_actualMoveSpeed", BindingFlags.Instance | BindingFlags.NonPublic);
     }
-
 
     public override void OnInspectorGUI()
     {

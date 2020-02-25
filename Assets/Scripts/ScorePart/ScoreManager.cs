@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
@@ -28,21 +26,18 @@ public class ScoreManager : MonoBehaviour
         //Probably move it to LevelSceneInitializer?
         RegularEnemyController.EnemyDown -= Handle_EnemyDown;
 
-        if(_currentScore == _record)
+        if (_currentScore == _record)
         {
             SaveRecord(_record);
         }
     }
-
-
-
 
     void Handle_EnemyDown()
     {
         _currentScore++;
         ScoreText.text = _currentScore.ToString();
 
-        if(_currentScore > _record)
+        if (_currentScore > _record)
         {
             _record = _currentScore;
             RecordText.text = _record.ToString();

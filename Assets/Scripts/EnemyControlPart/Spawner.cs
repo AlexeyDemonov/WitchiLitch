@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
@@ -12,7 +10,7 @@ public class Spawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        var enemyPrefab = Prefabs[ UnityEngine.Random.Range(0, Prefabs.Length) ];
+        var enemyPrefab = Prefabs[UnityEngine.Random.Range(0, Prefabs.Length)];
         var size = UnityEngine.Random.Range(MinSize, MaxSize);
         var instance = Instantiate<GameObject>(enemyPrefab, /*parent:*/this.transform);
         instance.transform.localScale = new Vector3(size, size, 0f);
@@ -20,7 +18,7 @@ public class Spawner : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if(DrawGizmo)
+        if (DrawGizmo)
         {
             Gizmos.DrawSphere(this.transform.position, MaxSize);
         }

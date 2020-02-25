@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class SwipeAndButtonUIController : UIToActionRequestConverter
@@ -38,6 +36,7 @@ public class SwipeAndButtonUIController : UIToActionRequestConverter
                 case TouchPhase.Began:
                     _startPosition = touch.position;
                     break;
+
                 case TouchPhase.Ended:
                     _endPosition = touch.position;
                     HandleTouch(_startPosition, _endPosition);

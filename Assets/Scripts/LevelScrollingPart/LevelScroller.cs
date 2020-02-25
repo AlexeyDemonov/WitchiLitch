@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,11 +6,14 @@ public class LevelScroller : BaseScroller
 {
     [Header("Starting part")]
     public SpriteRenderer StartingPart;
+
     [Header("Regular level")]
     public SpriteRenderer[] LevelParts;
     public int PartsCount;
+
     [Header("Boss part")]
     public SpriteRenderer BossLevel;
+
     public bool DrawGizmos;
 
     Vector3 _startingPosition;
@@ -40,7 +42,7 @@ public class LevelScroller : BaseScroller
 
     public void Handle_BossLevelEndRequest()
     {
-        if(_bossMode == true)
+        if (_bossMode == true)
             _bossMode = false;
     }
 
@@ -56,7 +58,7 @@ public class LevelScroller : BaseScroller
         _advancedMode = LevelParts.Length > PartsCount;
         _bossMode = false;
 
-        if(_advancedMode)
+        if (_advancedMode)
         {
             _spawnedIndexes = new Queue<int>();
             _spawned = new bool[LevelParts.Length];
@@ -67,7 +69,7 @@ public class LevelScroller : BaseScroller
 
     void PrebuildLevel()
     {
-        if(StartingPart != null)
+        if (StartingPart != null)
         {
             //Instantiate starting part
             var instanceOfStartingPart = Instantiate<SpriteRenderer>(StartingPart, _startingPosition, Quaternion.identity);
@@ -99,7 +101,7 @@ public class LevelScroller : BaseScroller
     // Update is called once per frame
     void Update()
     {
-        if(base.CurrentScrollSpeed != 0f)
+        if (base.CurrentScrollSpeed != 0f)
         {
             this.transform.position += Vector3.left * base.CurrentScrollSpeed * Time.deltaTime;
             _currentPosition = this.transform.position;
@@ -124,13 +126,13 @@ public class LevelScroller : BaseScroller
         var partToDelete = _partsChain.Dequeue();
         Destroy(partToDelete.gameObject);
 
-        if(_advancedMode && _spawnedIndexes.Count == PartsCount)
+        if (_advancedMode && _spawnedIndexes.Count == PartsCount)
         {
             var index = _spawnedIndexes.Dequeue();
             _spawned[index] = false;
         }
 
-        if(_bossMode && _nonBossPartsLeft > 0)
+        if (_bossMode && _nonBossPartsLeft > 0)
         {
             _nonBossPartsLeft--;
 
@@ -156,6 +158,7 @@ public class LevelScroller : BaseScroller
     }
 
     float GetHalfSize(SpriteRenderer sprite) => sprite.bounds.extents.x;
+
     float GetFullSize(SpriteRenderer sprite) => sprite.bounds.extents.x * 2f;
 
     void AddNextPartToChain(Queue<SpriteRenderer> chain, ref SpriteRenderer lastElement)
@@ -170,20 +173,20 @@ public class LevelScroller : BaseScroller
 
     SpriteRenderer DefineNextPart()
     {
-        if(_bossMode)
+        if (_bossMode)
         {
             return BossLevel;
         }
-        else if(_advancedMode)
+        else if (_advancedMode)
         {
             var length = LevelParts.Length;
             var index = UnityEngine.Random.Range(0, length);
-            
+
             while/*already*/(_spawned[index])
             {
                 index++;
 
-                if(index == length)
+                if (index == length)
                     index = 0;
             }
 

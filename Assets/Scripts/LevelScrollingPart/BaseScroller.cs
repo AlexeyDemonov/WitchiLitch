@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class BaseScroller : MonoBehaviour
@@ -12,7 +10,7 @@ public abstract class BaseScroller : MonoBehaviour
 
     protected void RequestScrollSpeed()
     {
-        if(Request_ScrollSpeed != null)
+        if (Request_ScrollSpeed != null)
             CurrentScrollSpeed = Request_ScrollSpeed.Invoke() * IncomingScrollSpeedMultiplier;
     }
 

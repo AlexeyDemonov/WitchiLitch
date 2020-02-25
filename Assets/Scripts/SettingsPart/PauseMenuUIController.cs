@@ -1,8 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseMenuUIController : MonoBehaviour
 {
@@ -25,7 +24,7 @@ public class PauseMenuUIController : MonoBehaviour
         RestartButton.onClick.AddListener(RestartGame);
         ExitButton.onClick.AddListener(ExitGame);
 
-        if(PauseUI.activeSelf)
+        if (PauseUI.activeSelf)
             PauseUI.SetActive(false);
 
         _onCrushDelay = new WaitForSeconds(OnCrushDelayBeforeShowUI);
@@ -34,13 +33,13 @@ public class PauseMenuUIController : MonoBehaviour
     // Sent to all game objects when the player pauses
     private void OnApplicationPause(bool pause)
     {
-        if(pause == true)
+        if (pause == true)
             PauseGame();
     }
 
     public void Handle_PlayerCrashed()
     {
-        if(_showUIAfterDelay == null)//Prevent double invoking
+        if (_showUIAfterDelay == null)//Prevent double invoking
         {
             ResumeButton.onClick.RemoveListener(ResumeGame);
             ResumeButton.gameObject.SetActive(false);
@@ -57,7 +56,7 @@ public class PauseMenuUIController : MonoBehaviour
 
     void PauseGame()
     {
-        if(_showUIAfterDelay != null)
+        if (_showUIAfterDelay != null)
         {
             StopCoroutine(_showUIAfterDelay);
             _showUIAfterDelay = null;

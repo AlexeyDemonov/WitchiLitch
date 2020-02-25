@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerDirectionDefiner : MonoBehaviour
@@ -9,6 +7,7 @@ public class PlayerDirectionDefiner : MonoBehaviour
     public float DeadZone;
 
     PlayerDirection _currentDirection;
+
     PlayerDirection CurrentDirection
     {
         get => _currentDirection;
@@ -27,7 +26,6 @@ public class PlayerDirectionDefiner : MonoBehaviour
         return CurrentDirection;
     }
 
-
     // Awake is called when the script instance is being loaded
     void Awake()
     {
@@ -39,7 +37,7 @@ public class PlayerDirectionDefiner : MonoBehaviour
     {
         var direction = DefinePlayerDirection(PlayerRigidbody);
 
-        if(direction != CurrentDirection)
+        if (direction != CurrentDirection)
         {
             CurrentDirection = direction;
         }

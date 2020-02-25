@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SwipeOnlyUIController : UIToActionRequestConverter
 {
@@ -32,6 +30,7 @@ public class SwipeOnlyUIController : UIToActionRequestConverter
                 case TouchPhase.Began:
                     _swipeStartPosition = touch.position;
                     break;
+
                 case TouchPhase.Ended:
                     var swipeEndPosition = touch.position;
                     HandleTouch(_swipeStartPosition, swipeEndPosition);
@@ -50,9 +49,11 @@ public class SwipeOnlyUIController : UIToActionRequestConverter
             case Gesture.Tap:
                 action = PlayerActionType.DashForward;
                 break;
+
             case Gesture.SwipeUp:
                 action = PlayerActionType.Jump;
                 break;
+
             case Gesture.SwipeDown:
                 action = PlayerActionType.DashDown;
                 break;
@@ -65,7 +66,7 @@ public class SwipeOnlyUIController : UIToActionRequestConverter
     {
         bool swipe = Mathf.Abs(startPos.y - endPos.y) > MinSwipeDistance;
 
-        if(swipe)
+        if (swipe)
             return startPos.y > endPos.y ? Gesture.SwipeDown : Gesture.SwipeUp;
         else
             return Gesture.Tap;

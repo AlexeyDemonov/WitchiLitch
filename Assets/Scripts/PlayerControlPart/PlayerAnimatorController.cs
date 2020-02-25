@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerAnimatorController : MonoBehaviour
 {
@@ -27,7 +24,7 @@ public class PlayerAnimatorController : MonoBehaviour
         //_stateNamesLength = _stateNames.Length;
 
         //(+)Cheaper (+)Configuration in compile-time (-)Changes of AnimState enum will affect this script
-        _stateNames = new string[]{ "Run", "Jump", "MidAir", "Fall", "Dash", "DashDown", "HitGround", "HitCeiling", "Die" };
+        _stateNames = new string[] { "Run", "Jump", "MidAir", "Fall", "Dash", "DashDown", "HitGround", "HitCeiling", "Die" };
         _stateNamesLength = _stateNames.Length;
     }
 
@@ -51,8 +48,8 @@ public class PlayerAnimatorController : MonoBehaviour
     {
         switch (args.HitDirection)
         {
-            case HitDirection.Above:    ConsiderApplyingNewState(AnimState.HitGround);     break;
-            case HitDirection.Below:    ConsiderApplyingNewState(AnimState.HitCeiling);    break;
+            case HitDirection.Above: ConsiderApplyingNewState(AnimState.HitGround); break;
+            case HitDirection.Below: ConsiderApplyingNewState(AnimState.HitCeiling); break;
             default: /*Do nothing*/  break;
         }
     }
@@ -61,9 +58,9 @@ public class PlayerAnimatorController : MonoBehaviour
     {
         switch (newDirection)
         {
-            case PlayerDirection.Rising:    if (_currentState != AnimState.Jump) { ConsiderApplyingNewState(AnimState.Jump); }   break;
-            case PlayerDirection.Falling:   ConsiderApplyingNewState(AnimState.Fall);   break;
-            case PlayerDirection.Staying:   ConsiderApplyingNewState(AnimState.Run);    break;
+            case PlayerDirection.Rising: if (_currentState != AnimState.Jump) { ConsiderApplyingNewState(AnimState.Jump); } break;
+            case PlayerDirection.Falling: ConsiderApplyingNewState(AnimState.Fall); break;
+            case PlayerDirection.Staying: ConsiderApplyingNewState(AnimState.Run); break;
         }
 
         _currentDireciton = newDirection;
@@ -78,9 +75,11 @@ public class PlayerAnimatorController : MonoBehaviour
             case AnimState.HitCeiling:
                 DefineCurrentState();
                 break;
+
             case AnimState.Die:
                 /*Ignore*/
                 break;
+
             default:
                 ApplyNewState(_currentState);
                 break;
@@ -106,9 +105,11 @@ public class PlayerAnimatorController : MonoBehaviour
             case PlayerDirection.Rising:
                 ApplyNewState(AnimState.Jump);
                 break;
+
             case PlayerDirection.Falling:
                 ApplyNewState(AnimState.Fall);
                 break;
+
             default:
                 {
                     if (GroundChecker.IsGrounded)
@@ -127,6 +128,7 @@ public class PlayerAnimatorController : MonoBehaviour
             case AnimState.UNDEFINED:
                 Debug.LogError("PlayerAnimatorController.ConsiderApplyingNewState: _currentState is UNDEFINED");
                 break;
+
             case AnimState.Run:         RunStateRules(newState);        break;
             case AnimState.Jump:        JumpStateRules(newState);       break;
             case AnimState.MidAir:      MidAirStateRules(newState);     break;
@@ -149,6 +151,7 @@ public class PlayerAnimatorController : MonoBehaviour
             case AnimState.Run:
                 /*Ignore*/
                 break;
+
             case AnimState.Jump:
             case AnimState.MidAir:
             case AnimState.Fall:
@@ -156,10 +159,12 @@ public class PlayerAnimatorController : MonoBehaviour
             case AnimState.DashDown:
                 ApplyNewState(newState);
                 break;
+
             case AnimState.HitGround:
             case AnimState.HitCeiling:
                 /*Ignore*/
                 break;
+
             case AnimState.Die:
                 ApplyNewState(newState);
                 break;
@@ -173,6 +178,7 @@ public class PlayerAnimatorController : MonoBehaviour
             case AnimState.Run:
                 ApplyNewState(AnimState.MidAir);
                 break;
+
             case AnimState.Jump:
             case AnimState.MidAir:
             case AnimState.Fall:
@@ -194,9 +200,11 @@ public class PlayerAnimatorController : MonoBehaviour
             case AnimState.Jump:
                 ApplyNewState(newState);
                 break;
+
             case AnimState.MidAir:
                 /*Ignore*/
                 break;
+
             case AnimState.Fall:
             case AnimState.Dash:
             case AnimState.DashDown:
@@ -217,9 +225,11 @@ public class PlayerAnimatorController : MonoBehaviour
             case AnimState.MidAir:
                 ApplyNewState(newState);
                 break;
+
             case AnimState.Fall:
                 /*Ignore*/
                 break;
+
             case AnimState.Dash:
             case AnimState.DashDown:
             case AnimState.HitGround:
@@ -237,21 +247,26 @@ public class PlayerAnimatorController : MonoBehaviour
             case AnimState.Run:
                 /*Ignore*/
                 break;
+
             case AnimState.Jump:
                 ApplyNewState(newState);
                 break;
+
             case AnimState.MidAir:
             case AnimState.Fall:
                 /*Ignore*/
                 break;
+
             case AnimState.Dash:
             case AnimState.DashDown:
                 ApplyNewState(newState);
                 break;
+
             case AnimState.HitGround:
             case AnimState.HitCeiling:
                 /*Ignore*/
                 break;
+
             case AnimState.Die:
                 ApplyNewState(newState);
                 break;
@@ -265,25 +280,32 @@ public class PlayerAnimatorController : MonoBehaviour
             case AnimState.Run:
                 /*Ignore*/
                 break;
+
             case AnimState.Jump:
                 ApplyNewState(newState);
                 break;
+
             case AnimState.MidAir:
             case AnimState.Fall:
                 /*Ignore*/
                 break;
+
             case AnimState.Dash:
                 ApplyNewState(newState);
                 break;
+
             case AnimState.DashDown:
                 /*Ignore*/
                 break;
+
             case AnimState.HitGround:
                 ApplyNewState(newState);
                 break;
+
             case AnimState.HitCeiling:
                 /*Ignore*/
                 break;
+
             case AnimState.Die:
                 ApplyNewState(newState);
                 break;
@@ -297,21 +319,26 @@ public class PlayerAnimatorController : MonoBehaviour
             case AnimState.Run:
                 /*Ignore*/
                 break;
+
             case AnimState.Jump:
                 ApplyNewState(newState);
                 break;
+
             case AnimState.MidAir:
             case AnimState.Fall:
                 /*Ignore*/
                 break;
+
             case AnimState.Dash:
             case AnimState.DashDown:
                 ApplyNewState(newState);
                 break;
+
             case AnimState.HitGround:
             case AnimState.HitCeiling:
                 /*Ignore*/
                 break;
+
             case AnimState.Die:
                 ApplyNewState(newState);
                 break;

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SoundEffectsBox : MonoBehaviour
 {
@@ -10,7 +8,8 @@ public class SoundEffectsBox : MonoBehaviour
     public AudioClip[] FruitSmashSounds;
     public AudioClip[] DieSounds;
     public AudioClip EasterEggFallSound;
-    [Range(0f,1f)]
+
+    [Range(0f, 1f)]
     public float SoundEffectsVolume;
 
     Vector3 _position;
@@ -33,6 +32,7 @@ public class SoundEffectsBox : MonoBehaviour
             case PlayerActionType.Jump:
                 PlayRandomSound(JumpSounds);
                 break;
+
             case PlayerActionType.DashForward:
             case PlayerActionType.DashDown:
                 PlayRandomSound(DashSounds);
@@ -47,6 +47,7 @@ public class SoundEffectsBox : MonoBehaviour
             case HittedObjectType.Platform:
                 PlayRandomSound(HitSounds);
                 break;
+
             case HittedObjectType.Enemy:/*Presume it means that player smashed the enemy, otherwise PlayerCrashed event would have been invoked*/
                 PlayRandomSound(FruitSmashSounds);
                 break;
@@ -60,7 +61,7 @@ public class SoundEffectsBox : MonoBehaviour
 
     public void Handle_PlayerFallen()
     {
-        if(UnityEngine.Random.Range(0,5) == 0)
+        if (UnityEngine.Random.Range(0, 5) == 0)
             PlayRandomSound(EasterEggFallSound);
         else
             PlayRandomSound(DieSounds);
@@ -68,17 +69,17 @@ public class SoundEffectsBox : MonoBehaviour
 
     void PlayRandomSound(params AudioClip[] sounds)
     {
-        if(_muted)
+        if (_muted)
             return;
 
         int length = sounds.Length;
 
         AudioClip soundToPlay = null;
 
-        if(length == 0)
+        if (length == 0)
             return;
-        else if(length > 1)
-            soundToPlay = sounds[ UnityEngine.Random.Range(0, length) ];
+        else if (length > 1)
+            soundToPlay = sounds[UnityEngine.Random.Range(0, length)];
         else/*if(length == 1)*/
             soundToPlay = sounds[0];
 
