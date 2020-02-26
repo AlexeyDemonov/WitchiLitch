@@ -5,11 +5,12 @@ public class SwipeOnlyUIController : UIToActionRequestConverter
     public float MinSwipeDistance;
 
     Vector2 _swipeStartPosition;
+    bool _gestureInProgress;
 
     //Nested
     enum Gesture
     {
-        Tap, SwipeUp, SwipeDown
+        UNDEFINED, SwipeUp, SwipeDown
     }
 
     // Start is called before the first frame update
@@ -29,37 +30,41 @@ public class SwipeOnlyUIController : UIToActionRequestConverter
             {
                 case TouchPhase.Began:
                     _swipeStartPosition = touch.position;
+                    _gestureInProgress = true;
+                    break;
+
+                case TouchPhase.Moved:
+                    if (_gestureInProgress)
+                    {
+                        var currentTouchPosition = touch.position;
+                        var gesture = DefineGesture(_swipeStartPosition, currentTouchPosition);
+
+                        if (gesture != Gesture.UNDEFINED)
+                        {
+                            _gestureInProgress = false;
+
+                            switch (gesture)
+                            {
+                                case Gesture.SwipeUp:
+                                    base.RaiseActionRequest(PlayerActionType.Jump);
+                                    break;
+                                case Gesture.SwipeDown:
+                                    base.RaiseActionRequest(PlayerActionType.DashDown);
+                                    break;
+                            }
+                        }
+                    }
                     break;
 
                 case TouchPhase.Ended:
-                    var swipeEndPosition = touch.position;
-                    HandleTouch(_swipeStartPosition, swipeEndPosition);
+                    if (_gestureInProgress)
+                    {
+                        _gestureInProgress = false;
+                        base.RaiseActionRequest(PlayerActionType.DashForward);
+                    }
                     break;
             }
         }
-    }
-
-    void HandleTouch(Vector2 startPos, Vector2 endPos)
-    {
-        var gesture = DefineGesture(startPos, endPos);
-        PlayerActionType action = default;
-
-        switch (gesture)
-        {
-            case Gesture.Tap:
-                action = PlayerActionType.DashForward;
-                break;
-
-            case Gesture.SwipeUp:
-                action = PlayerActionType.Jump;
-                break;
-
-            case Gesture.SwipeDown:
-                action = PlayerActionType.DashDown;
-                break;
-        }
-
-        base.RaiseActionRequest(action);
     }
 
     Gesture DefineGesture(Vector2 startPos, Vector2 endPos)
@@ -69,6 +74,6 @@ public class SwipeOnlyUIController : UIToActionRequestConverter
         if (swipe)
             return startPos.y > endPos.y ? Gesture.SwipeDown : Gesture.SwipeUp;
         else
-            return Gesture.Tap;
+            return Gesture.UNDEFINED;
     }
 }

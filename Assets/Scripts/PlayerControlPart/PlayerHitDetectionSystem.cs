@@ -6,13 +6,12 @@ public class PlayerHitDetectionSystem : MonoBehaviour
 {
     public float PlatformSideHitRange;
     public float EnemySideHitRange;
-    public GroundChecker EnemyOnJumpHitChecker;
 
     public bool DrawPlatformSideHitGizmo;
     public bool DrawEnemySideHitGizmo;
 
     public event Action PlayerCrashed;
-
+    public event Func<AnimState> Request_CurrentPlayerState;
     public event Action<HitDetectionEventArgs> PlayerHittedObject;
 
     bool _dashing;
@@ -29,10 +28,8 @@ public class PlayerHitDetectionSystem : MonoBehaviour
     {
         switch (actionType)
         {
-            case PlayerActionType.Jump: CheckIfJumpHitEnemyUnderPlayer();   break;
             case PlayerActionType.DashForward:      _dashing = true;    break;
             case PlayerActionType.DashForwardEnd:   _dashing = false;   break;
-            case PlayerActionType.DashDown: /*Do nothing*/  break;
             default:    /*Do nothing*/    break;
         }
     }
@@ -84,19 +81,17 @@ public class PlayerHitDetectionSystem : MonoBehaviour
                 return true;
         }
 
+        if(args.HitDirection == HitDirection.Below)
+        {
+            if (args.HittedObjectType == HittedObjectType.Enemy && _dashing == false)
+            {
+                if (Request_CurrentPlayerState != null && Request_CurrentPlayerState.Invoke() == AnimState.Run)
+                    return true;
+            }
+        }
+
         /*else*/
         return false;
-    }
-
-    void CheckIfJumpHitEnemyUnderPlayer()
-    {
-        var hit = EnemyOnJumpHitChecker.GroundCheckHit();
-
-        if (hit.collider != null && DefineHittedObjectType(hit.transform) == HittedObjectType.Enemy)
-        {
-            var eventArgs = new HitDetectionEventArgs() { HittedObject = hit.collider.gameObject, HittedObjectType = HittedObjectType.Enemy, HitPoint = hit.point, HitDirection = HitDirection.Above };
-            PlayerHittedObject?.Invoke(eventArgs);
-        }
     }
 
     // Implement this OnDrawGizmosSelected if you want to draw gizmos only if the object is selected

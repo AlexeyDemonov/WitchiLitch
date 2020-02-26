@@ -28,6 +28,8 @@ public class PlayerAnimatorController : MonoBehaviour
         _stateNamesLength = _stateNames.Length;
     }
 
+    public AnimState Handle_CurrentPlayerStateRequest() => _currentState;
+
     public void Handle_PlayerAction(PlayerActionType actionType)
     {
         switch (actionType)

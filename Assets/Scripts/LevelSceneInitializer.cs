@@ -39,6 +39,7 @@ public class LevelSceneInitializer : MonoBehaviour
         PlayerHitDetectionSystem.PlayerCrashed += PlayerAnimatorController.Handle_PlayerCrashed;
         PlayerHitDetectionSystem.PlayerCrashed += ScrollSpeedDefiner.StopScroll;
         PlayerHitDetectionSystem.PlayerCrashed += PauseMenuUIController.Handle_PlayerCrashed;
+        PlayerHitDetectionSystem.Request_CurrentPlayerState += PlayerAnimatorController.Handle_CurrentPlayerStateRequest;
 
         FallChecker.Fallen += PlayerController.Handle_PalyerCrashed;
         FallChecker.Fallen += PlayerAnimatorController.Handle_PlayerCrashed;
