@@ -6,6 +6,7 @@ public class PlayerHitDetectionSystem : MonoBehaviour
 {
     public float PlatformSideHitRange;
     public float EnemySideHitRange;
+    public GroundChecker AfterDashFrontEnemyDetector;
 
     public bool DrawPlatformSideHitGizmo;
     public bool DrawEnemySideHitGizmo;
@@ -29,8 +30,19 @@ public class PlayerHitDetectionSystem : MonoBehaviour
         switch (actionType)
         {
             case PlayerActionType.DashForward:      _dashing = true;    break;
-            case PlayerActionType.DashForwardEnd:   _dashing = false;   break;
+            case PlayerActionType.DashForwardEnd:   _dashing = false;   HitEnemyInFront();   break;
             default:    /*Do nothing*/    break;
+        }
+    }
+
+    void HitEnemyInFront()
+    {
+        var checkHit = AfterDashFrontEnemyDetector.GroundCheckHit();
+        
+        if(checkHit.collider != null && DefineHittedObjectType(checkHit.collider.transform) == HittedObjectType.Enemy)
+        {
+            var eventArgs = new HitDetectionEventArgs() { HittedObject = checkHit.collider.gameObject, HittedObjectType = HittedObjectType.Enemy, HitPoint = checkHit.point, HitDirection = HitDirection.RightSide };
+            PlayerHittedObject?.Invoke(eventArgs);
         }
     }
 
