@@ -64,6 +64,9 @@ public class LevelScroller : BaseScroller
             _spawned = new bool[LevelParts.Length];
         }
 
+        var time = DateTime.Now;
+        UnityEngine.Random.InitState(time.Hour + time.Minute + time.Second);
+
         PrebuildLevel();
     }
 
