@@ -15,6 +15,7 @@ public class LevelSceneInitializer : MonoBehaviour
     public EnemyHitRegistrationSystem EnemyHitRegistrationSystem;
     public UIToActionRequestConverter UIToActionRequestConverter;
     public SoundEffectsBox SoundEffectsBox;
+    public CustomRandom CustomRandom;
 
     private void Awake()
     {
@@ -22,6 +23,11 @@ public class LevelSceneInitializer : MonoBehaviour
         {
             scroller.Request_ScrollSpeed += ScrollSpeedDefiner.GetCurrentScrollSpeed;
             ScrollSpeedDefiner.ScrollSpeedChanged += scroller.Handle_ScrollSpeedChanged;
+
+            if (scroller is LevelScroller)
+            {
+                ((LevelScroller)scroller).Request_RandomValue += CustomRandom.Range;
+            }
         }
 
         DashToScrollConverter.Request_IncreaseScrollSpeed += ScrollSpeedDefiner.IncreaseSpeed;

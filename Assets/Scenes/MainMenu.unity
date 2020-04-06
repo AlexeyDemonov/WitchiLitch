@@ -1573,14 +1573,13 @@ PrefabInstance:
         type: 3}
       propertyPath: LevelParts.Array.data[0]
       value: 
-      objectReference: {fileID: 1436531785045057791, guid: 1aaf2652918504346b42e4941d7dabd4,
+      objectReference: {fileID: 1436531785045057791, guid: 21c76d8488a54b145a0727ea3e57b928,
         type: 3}
     - target: {fileID: 2537059132365134338, guid: 4845d316f21caaf4188f7457cf4daba3,
         type: 3}
       propertyPath: StartingPart
       value: 
-      objectReference: {fileID: 1436531785045057791, guid: 1aaf2652918504346b42e4941d7dabd4,
-        type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 2537059132394454102, guid: 4845d316f21caaf4188f7457cf4daba3,
         type: 3}
       propertyPath: m_LocalPosition.x

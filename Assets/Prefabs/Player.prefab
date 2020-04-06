@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ce1fc242fffe2247856a9f367a3959f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GroundDistance: 0.75
+  GroundDistance: 1
   LayerMask: 1536
 --- !u!1 &4335760085819346262
 GameObject:
@@ -711,7 +711,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlatformSideHitRange: 0.35
   EnemySideHitRange: 0.5
-  AfterDashFrontEnemyDetector: {fileID: 0}
+  AfterDashFrontEnemyDetector: {fileID: 1840129062}
   DrawPlatformSideHitGizmo: 0
   DrawEnemySideHitGizmo: 0
 --- !u!114 &4335760086458299810

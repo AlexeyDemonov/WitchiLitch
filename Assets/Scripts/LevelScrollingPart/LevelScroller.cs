@@ -30,6 +30,7 @@ public class LevelScroller : BaseScroller
     int _nonBossPartsLeft;
 
     public event Action BossLevelReady;
+    public event Func<int,int,int> Request_RandomValue;
 
     public void Handle_BossLevelStartRequest()
     {
@@ -63,9 +64,6 @@ public class LevelScroller : BaseScroller
             _spawnedIndexes = new Queue<int>();
             _spawned = new bool[LevelParts.Length];
         }
-
-        var time = DateTime.Now;
-        UnityEngine.Random.InitState(time.Hour + time.Minute + time.Second);
 
         PrebuildLevel();
     }
@@ -183,7 +181,7 @@ public class LevelScroller : BaseScroller
         else if (_advancedMode)
         {
             var length = LevelParts.Length;
-            var index = UnityEngine.Random.Range(0, length);
+            int index = GetRandomValue(0, length);
 
             while/*already*/(_spawned[index])
             {
@@ -200,9 +198,21 @@ public class LevelScroller : BaseScroller
         }
         else
         {
-            var index = UnityEngine.Random.Range(0, LevelParts.Length);
+            var index = GetRandomValue(0, LevelParts.Length);
             return LevelParts[index];
         }
+    }
+
+    private int GetRandomValue(int min, int max)
+    {
+        int value = default(int);
+
+        if (Request_RandomValue != null)
+            value = Request_RandomValue.Invoke(min, max);
+        else
+            value = UnityEngine.Random.Range(min, max);
+
+        return value;
     }
 
     private void OnDrawGizmos()
