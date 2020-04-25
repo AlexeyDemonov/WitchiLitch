@@ -16,6 +16,11 @@ public class MainMenuUIController : MonoBehaviour
     public Toggle SoundToggle;
     public Button CloseSettingsButton;
 
+    public GameObject ResetScoreConfirmUI;
+    public Button ResetScoreButton;
+    public Button ResetScoreConfirmButton;
+    public Button ResetScoreDeclineButton;
+
     public event Action<SettingsEventArgs> SettingsChanged;
 
     public void AcceptSettings(SettingsEventArgs args)
@@ -33,6 +38,10 @@ public class MainMenuUIController : MonoBehaviour
 
         MusicToggle?.onValueChanged.AddListener(Handle_MusicSettingChanged);
         SoundToggle?.onValueChanged.AddListener(Handle_SoundSettingChanged);
+
+        ResetScoreButton?.onClick.AddListener(RequestScoreResetConfirmation);
+        ResetScoreConfirmButton?.onClick.AddListener(ResetScore);
+        ResetScoreDeclineButton?.onClick.AddListener(HideResetScoreUI);
     }
 
     void StartGame()
@@ -75,5 +84,23 @@ public class MainMenuUIController : MonoBehaviour
     {
         var newSettings = new SettingsEventArgs() { MusicOn = music, SoundOn = sound };
         SettingsChanged?.Invoke(newSettings);
+    }
+
+    void RequestScoreResetConfirmation()
+    {
+        SettingsUI.SetActive(false);
+        ResetScoreConfirmUI.SetActive(true);
+    }
+
+    void ResetScore()
+    {
+        UnityEngine.PlayerPrefs.SetInt("ScoreRecord", 0);
+        HideResetScoreUI();
+    }
+
+    void HideResetScoreUI()
+    {
+        SettingsUI.SetActive(true);
+        ResetScoreConfirmUI.SetActive(false);
     }
 }
