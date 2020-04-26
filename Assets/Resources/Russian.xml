@@ -1,0 +1,93 @@
+﻿<?xml version="1.0"?>
+<Localization xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Entries>
+    <Entry>
+      <Key>START</Key>
+      <Value>СТАРТ</Value>
+    </Entry>
+    <Entry>
+      <Key>SETTINGS</Key>
+      <Value>НАСТРОЙКИ</Value>
+    </Entry>
+    <Entry>
+      <Key>EXIT</Key>
+      <Value>ВЫХОД</Value>
+    </Entry>
+    <Entry>
+      <Key>Settings</Key>
+      <Value>Настройки</Value>
+    </Entry>
+    <Entry>
+      <Key>Music</Key>
+      <Value>Музыка</Value>
+    </Entry>
+    <Entry>
+      <Key>Sound</Key>
+      <Value>Звук</Value>
+    </Entry>
+    <Entry>
+      <Key>Close</Key>
+      <Value>Закрыть</Value>
+    </Entry>
+    <Entry>
+      <Key>Show tutorial</Key>
+      <Value>Показать обучение</Value>
+    </Entry>
+    <Entry>
+      <Key>Reset score record</Key>
+      <Value>Сбросить рекорд</Value>
+    </Entry>
+    <Entry>
+      <Key>Reset score?</Key>
+      <Value>Сбросить рекорд?</Value>
+    </Entry>
+    <Entry>
+      <Key>Yes</Key>
+      <Value>Да</Value>
+    </Entry>
+    <Entry>
+      <Key>Cancel</Key>
+      <Value>Отмена</Value>
+    </Entry>
+    <Entry>
+      <Key>SWIPE UP - JUMP</Key>
+      <Value>СВАЙП ВВЕРХ - ПРЫЖОК</Value>
+    </Entry>
+    <Entry>
+      <Key>OK</Key>
+      <Value>Окей</Value>
+    </Entry>
+    <Entry>
+      <Key>SWIPE DOWN - DASH DOWN</Key>
+      <Value>СВАЙП ВНИЗ - УДАР ВНИЗ</Value>
+    </Entry>
+    <Entry>
+      <Key>Aha!</Key>
+      <Value>Ага!</Value>
+    </Entry>
+    <Entry>
+      <Key>TAP - DASH</Key>
+      <Value>ТАП - УДАР ВПЕРЁД</Value>
+    </Entry>
+    <Entry>
+      <Key>Got it</Key>
+      <Value>Понятно</Value>
+    </Entry>
+    <Entry>
+      <Key>Resume</Key>
+      <Value>Продолжить</Value>
+    </Entry>
+    <Entry>
+      <Key>Restart</Key>
+      <Value>Рестарт</Value>
+    </Entry>
+    <Entry>
+      <Key>Exit</Key>
+      <Value>Выход</Value>
+    </Entry>
+    <Entry>
+      <Key>WitchiLitch</Key>
+      <Value>WitchiLitch</Value>
+    </Entry>
+  </Entries>
+</Localization>
