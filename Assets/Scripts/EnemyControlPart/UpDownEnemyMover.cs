@@ -89,8 +89,8 @@ public class UpDownEnemyMover : EnemyMover
         {
             Vector3 currentPosition = this.transform.position;
 
-            Gizmos.DrawCube(new Vector3(currentPosition.x, _upBorder, currentPosition.z), new Vector3(2f, 0.1f, 0.1f));
-            Gizmos.DrawCube(new Vector3(currentPosition.x, _downBorder, currentPosition.z), new Vector3(2f, 0.1f, 0.1f));
+            Gizmos.DrawCube(new Vector3(currentPosition.x, currentPosition.y + MoveUpBy, currentPosition.z), new Vector3(2f, 0.1f, 0.1f));
+            Gizmos.DrawCube(new Vector3(currentPosition.x, currentPosition.y - MoveDownBy, currentPosition.z), new Vector3(2f, 0.1f, 0.1f));
         }
     }
 }
